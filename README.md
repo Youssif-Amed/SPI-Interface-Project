@@ -1,4 +1,4 @@
-# SPI Interface Project
+# SPI Slave with Single Port Ram 
 
 This repository contains the Verilog implementation of an SPI Interface designed for an FPGA using Vivado. The project involves creating an SPI Slave module, Single Port RAM, and an SPI Wrapper module that integrates both.
 
@@ -8,6 +8,7 @@ The SPI Interface project is designed to facilitate communication between a mast
 - **SPI Slave Module**: Handles the SPI protocol and communication with the master device.
 - **Single Port RAM**: Used for data storage and retrieval in synchronization with the SPI Slave.
 - **SPI Wrapper Module**: Integrates the SPI Slave and RAM, managing data flow and control signals between them.
+- **My Final Report**: [click..](Youssif_Ahmed_SPI_Project.pdf)
 
 ## Block Diagram
 
