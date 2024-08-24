@@ -12,7 +12,7 @@ The SPI Interface project is designed to facilitate communication between a mast
 ## Block Diagram
 
 <p align="center">
-  <img src="SPI_Interface_blk_diagram.jpg" alt="SPI Interface Diagram">
+  <img src="SPI_Wrapper_blk_diagram.png" alt="SPI Wrapper Diagram">
 </p>
 
 ## Specifications
@@ -25,17 +25,8 @@ The SPI Interface project is designed to facilitate communication between a mast
 ## Project Structure
 
 - [**SPI_Slave.v**](RTL_design/SPI_Slave.v): Verilog code for the SPI Slave module.
-<p align="center">
-  <img src="SPI_Slave_blk_diagram.png" alt="SPI Slave Diagram">
-</p>
 - [**single_port_Ram.v**](RTL_design/Single_Port_Ram.v): Verilog code for the Single Port RAM module.
-<p align="center">
-  <img src="Single_Port_blk_diagram.png" alt="Single Port Ram Diagram">
-</p>
 - [**SPI_Wrapper.v**](RTL_design/SPI_Wrapper.v): Verilog code for the SPI Wrapper module.
-<p align="center">
-  <img src="SPI_Wrapper_blk_diagram.png" alt="SPI Wrapper Diagram">
-</p>
 - [**testbench.v**](Testbench/SPI_Master_tb.v): Testbench for simulating the SPI Interface.
 - [**constraints.xdc**](FPGA_Flow/SPI_Constraints.xdc): Constraints file used in Vivado for FPGA implementation.
 - [**synthesis/**](FPGA_Flow/Synthesis): Directory containing synthesis reports for different FSM encoding methods.
