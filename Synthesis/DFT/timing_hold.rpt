@@ -1,0 +1,3319 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -max_paths 100
+Design : SPI_Wrapper
+Version: K-2015.06
+Date   : Wed Aug 19 03:47:15 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c   Library: scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+Wire Load Model Mode: top
+
+  Startpoint: RAM/dout_reg_7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_0__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_7_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_7_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/mem_reg_0__0_/SI (SDFFRQX1M)         0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_0__0_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.25      -0.15
+  data required time                                 -0.15
+  -----------------------------------------------------------
+  data required time                                 -0.15
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.76
+
+
+  Startpoint: RAM/tx_valid_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SPI_slave/CS_reg_0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  RAM/tx_valid_reg/CK (SDFFSRX1M)                         0.00 #     0.00 r
+  RAM/tx_valid_reg/QN (SDFFSRX1M)                         0.62       0.62 r
+  RAM/test_so21 (single_port_Ram_test_1)                  0.00       0.62 r
+  SPI_slave/test_si (SPI_Slave_test_1)                    0.00       0.62 r
+  SPI_slave/CS_reg_0_/SI (SDFFSRX1M)                      0.00       0.62 r
+  data arrival time                                                  0.62
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.10       0.10
+  SPI_slave/CS_reg_0_/CK (SDFFSRX1M)                      0.00       0.10 r
+  library hold time                                      -0.26      -0.16
+  data required time                                                -0.16
+  --------------------------------------------------------------------------
+  data required time                                                -0.16
+  data arrival time                                                 -0.62
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.78
+
+
+  Startpoint: RAM/dout_reg_6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_6_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_6_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_7_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_7_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/dout_reg_5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_5_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_5_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_6_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_6_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/dout_reg_4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_4_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_4_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_5_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_5_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/dout_reg_3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_3_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_3_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_4_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_4_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/dout_reg_2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_2_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_2_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_3_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_3_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/dout_reg_1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_1_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_1_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_2_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_2_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/dout_reg_0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/dout_reg_1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/dout_reg_0_/CK (SDFFSRX1M)           0.00 #     0.00 r
+  RAM/dout_reg_0_/QN (SDFFSRX1M)           0.62       0.62 r
+  RAM/dout_reg_1_/SI (SDFFSRX1M)           0.00       0.62 r
+  data arrival time                                   0.62
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/dout_reg_1_/CK (SDFFSRX1M)           0.00       0.10 r
+  library hold time                       -0.26      -0.16
+  data required time                                 -0.16
+  -----------------------------------------------------------
+  data required time                                 -0.16
+  data arrival time                                  -0.62
+  -----------------------------------------------------------
+  slack (MET)                                         0.78
+
+
+  Startpoint: RAM/addr_internal_reg_0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/addr_internal_reg_1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  RAM/addr_internal_reg_0_/CK (SEDFFX4M)                  0.00 #     0.00 r
+  RAM/addr_internal_reg_0_/QN (SEDFFX4M)                  0.78       0.78 r
+  RAM/addr_internal_reg_1_/SI (SEDFFX4M)                  0.00       0.78 r
+  data arrival time                                                  0.78
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.10       0.10
+  RAM/addr_internal_reg_1_/CK (SEDFFX4M)                  0.00       0.10 r
+  library hold time                                      -0.34      -0.24
+  data required time                                                -0.24
+  --------------------------------------------------------------------------
+  data required time                                                -0.24
+  data arrival time                                                 -0.78
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.03
+
+
+  Startpoint: RAM/addr_internal_reg_1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/addr_internal_reg_2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  RAM/addr_internal_reg_1_/CK (SEDFFX4M)                  0.00 #     0.00 r
+  RAM/addr_internal_reg_1_/QN (SEDFFX4M)                  0.78       0.78 r
+  RAM/addr_internal_reg_2_/SI (SEDFFX1M)                  0.00       0.78 r
+  data arrival time                                                  0.78
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.10       0.10
+  RAM/addr_internal_reg_2_/CK (SEDFFX1M)                  0.00       0.10 r
+  library hold time                                      -0.35      -0.25
+  data required time                                                -0.25
+  --------------------------------------------------------------------------
+  data required time                                                -0.25
+  data arrival time                                                 -0.78
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.03
+
+
+  Startpoint: SPI_slave/rx_counter_reg_2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SPI_slave/rx_counter_reg_3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  SPI_slave/rx_counter_reg_2_/CK (SDFFSRX2M)              0.00 #     0.00 r
+  SPI_slave/rx_counter_reg_2_/QN (SDFFSRX2M)              0.88       0.88 r
+  SPI_slave/rx_counter_reg_3_/SI (SDFFSRX1M)              0.00       0.88 r
+  data arrival time                                                  0.88
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.10       0.10
+  SPI_slave/rx_counter_reg_3_/CK (SDFFSRX1M)              0.00       0.10 r
+  library hold time                                      -0.30      -0.20
+  data required time                                                -0.20
+  --------------------------------------------------------------------------
+  data required time                                                -0.20
+  data arrival time                                                 -0.88
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.07
+
+
+  Startpoint: SPI_slave/rx_counter_reg_1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SPI_slave/rx_counter_reg_2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  SPI_slave/rx_counter_reg_1_/CK (SDFFSRX4M)              0.00 #     0.00 r
+  SPI_slave/rx_counter_reg_1_/Q (SDFFSRX4M)               0.87       0.87 f
+  SPI_slave/rx_counter_reg_2_/SI (SDFFSRX2M)              0.00       0.87 f
+  data arrival time                                                  0.87
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.10       0.10
+  SPI_slave/rx_counter_reg_2_/CK (SDFFSRX2M)              0.00       0.10 r
+  library hold time                                      -0.41      -0.31
+  data required time                                                -0.31
+  --------------------------------------------------------------------------
+  data required time                                                -0.31
+  data arrival time                                                 -0.87
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.17
+
+
+  Startpoint: SPI_slave/rx_counter_reg_0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SPI_slave/rx_counter_reg_1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  SPI_slave/rx_counter_reg_0_/CK (SDFFSRX4M)              0.00 #     0.00 r
+  SPI_slave/rx_counter_reg_0_/QN (SDFFSRX4M)              1.04       1.04 r
+  SPI_slave/rx_counter_reg_1_/SI (SDFFSRX4M)              0.00       1.04 r
+  data arrival time                                                  1.04
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.10       0.10
+  SPI_slave/rx_counter_reg_1_/CK (SDFFSRX4M)              0.00       0.10 r
+  library hold time                                      -0.30      -0.20
+  data required time                                                -0.20
+  --------------------------------------------------------------------------
+  data required time                                                -0.20
+  data arrival time                                                 -1.04
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.24
+
+
+  Startpoint: RAM/mem_reg_1__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__5_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__5_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__6_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__6_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__5_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__5_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__6_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__6_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__5_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__5_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__6_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__6_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_41__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_41__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_41__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_41__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_41__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_41__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__3_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__3_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__4_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__4_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__3_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__3_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__4_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__4_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__3_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__3_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__4_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__4_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_41__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_41__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_41__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_41__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_41__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_41__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__2_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__2_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__3_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__3_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__2_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__2_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__3_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__3_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__2_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__2_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__3_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__3_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_41__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_41__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_41__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_41__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_41__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_41__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__1_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__1_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__2_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__2_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__1_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__1_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__2_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__2_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__1_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__1_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__2_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__2_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_41__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_41__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_41__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_41__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_41__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_41__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__6_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__6_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__7_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__7_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__6_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__6_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__7_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__7_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__6_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__6_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__7_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__7_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__5_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__6_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__5_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__5_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__6_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__6_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__4_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__4_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__5_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__5_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__4_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__4_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__5_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__5_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__4_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__4_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__5_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__5_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_41__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_41__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_41__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_41__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_41__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_41__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__4_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__5_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__4_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__4_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__5_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__5_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__3_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__4_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__3_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__3_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__4_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__4_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__2_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__3_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__2_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__2_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__3_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__3_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__1_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__1_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__1_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__2_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__2_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_33__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_33__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_33__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_37__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_37__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_37__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_41__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_41__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_41__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_41__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_41__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_41__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_1__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__0_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__0_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_1__1_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_1__1_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_9__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__0_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__0_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_9__1_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_9__1_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_5__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__0_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__0_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_5__1_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_5__1_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_13__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_13__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_13__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_25__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_25__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_25__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_17__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_17__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_17__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__0_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_21__1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__0_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__0_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_21__1_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_21__1_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_1__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_2__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_1__7_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_1__7_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_2__0_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_2__0_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_5__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_6__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_5__7_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_5__7_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_6__0_/SI (SDFFRQX1M)         0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_6__0_/CK (SDFFRQX1M)         0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_9__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_10__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_9__7_/CK (SDFFRQX1M)         0.00 #     0.00 r
+  RAM/mem_reg_9__7_/Q (SDFFRQX1M)          0.92       0.92 f
+  RAM/mem_reg_10__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_10__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_13__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_14__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_13__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_13__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_14__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_14__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_17__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_18__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_17__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_17__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_18__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_18__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_21__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_22__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_21__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_21__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_22__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_22__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_30__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_30__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_30__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_25__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_26__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_25__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_25__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_26__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_26__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_33__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_34__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_33__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_33__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_34__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_34__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_37__7_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_38__0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_37__7_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_37__7_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_38__0_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_38__0_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+  Startpoint: RAM/mem_reg_29__6_
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RAM/mem_reg_29__7_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  SPI_Wrapper        tsmc13_wl30           scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  RAM/mem_reg_29__6_/CK (SDFFRQX1M)        0.00 #     0.00 r
+  RAM/mem_reg_29__6_/Q (SDFFRQX1M)         0.92       0.92 f
+  RAM/mem_reg_29__7_/SI (SDFFRQX1M)        0.00       0.92 f
+  data arrival time                                   0.92
+
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  clock uncertainty                        0.10       0.10
+  RAM/mem_reg_29__7_/CK (SDFFRQX1M)        0.00       0.10 r
+  library hold time                       -0.44      -0.34
+  data required time                                 -0.34
+  -----------------------------------------------------------
+  data required time                                 -0.34
+  data arrival time                                  -0.92
+  -----------------------------------------------------------
+  slack (MET)                                         1.25
+
+
+1

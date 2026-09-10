@@ -1,0 +1,363 @@
+# =======================================================================================
+# File       : cons.tcl
+# Author     : Youssef Ahmed
+# Description: Generic, reusable constraint file for Synopsys Design Compiler.
+#              Supports parameterized configuration for clocks, I/O timing,
+#              driving cells, loads, operating conditions, and wireload models.
+# Usage      : Override variables from the main synthesis script before sourcing.
+# =======================================================================================
+
+
+# ==============================================================
+# =============== Section 0 : DC Variables / Safety ============
+# ==============================================================
+
+# Prevent unwanted assign statements and ensure clean constant handling
+# -all              : Apply to all nets.
+# -buffer_constants : Insert buffers where constants are directly connected.
+# -feedthroughs     : Avoid creating direct assigns between ports.
+set_fix_multiple_port_nets -all -buffer_constants -feedthroughs
+
+
+# ==============================================================
+# ============= Section 1 : Clock Definition ===================
+# ==============================================================
+
+# ---------- Default Clock Parameters (override if needed) ----------
+if {![info exists CLK_NAME]}       { set CLK_NAME      "clk" }
+if {![info exists CLK_PER]}        { set CLK_PER        100   }   ;# ns
+if {![info exists CLK_SETUP_SKEW]} { set CLK_SETUP_SKEW 0.2   }   ;# ns
+if {![info exists CLK_HOLD_SKEW]}  { set CLK_HOLD_SKEW  0.1   }   ;# ns
+if {![info exists CLK_LAT]}        { set CLK_LAT        0     }
+if {![info exists CLK_RISE]}       { set CLK_RISE       0.05  }
+if {![info exists CLK_FALL]}       { set CLK_FALL       0.05  }
+
+# ---------- Master Clock Definition ----------
+# -waveform "0 [expr $CLK_PER/2]" [get_ports $CLK_NAME] if it is ignored -> it is assumed 50% duty
+create_clock -name $CLK_NAME -period $CLK_PER -waveform "0 [expr $CLK_PER/2]" [get_ports $CLK_NAME]
+
+# ---------- Clock Properties ----------
+set_clock_uncertainty -setup $CLK_SETUP_SKEW [get_clocks $CLK_NAME]
+set_clock_uncertainty -hold  $CLK_HOLD_SKEW  [get_clocks $CLK_NAME]
+set_clock_transition  -rise  $CLK_RISE       [get_clocks $CLK_NAME]
+set_clock_transition  -fall  $CLK_FALL       [get_clocks $CLK_NAME]
+set_clock_latency            $CLK_LAT        [get_clocks $CLK_NAME]
+
+# Protect clock and reset networks from optimization
+set_dont_touch_network {clk arst_n}
+
+
+# ===============================================================
+# ========= Section 1.1 : Optional Generated Clock Definition ===
+# ===============================================================
+
+# Example (override in your synthesis script before sourcing):
+#   set GEN_CLK_1 1
+#   set GEN_CLK_1_NAME "CLK_DIV_2"
+#   set GEN_CLK_1_DIV 2
+#   set GEN_CLK_1_PORT "U0_ClkDiv/o_div_clk"
+#   set GEN_CLK_1_PIN  "U0_ClkDiv*/*/GENCLK" ("*" to easy to access the pin)
+
+# if {[info exists GEN_CLK_1] && $GEN_CLK_1} {
+#     if {![info exists GEN_CLK_1_NAME]} { set GEN_CLK_1_NAME "CLK_DIV_1" }
+#     if {![info exists GEN_CLK_1_DIV]}  { set GEN_CLK_1_DIV  1 }
+#     if {![info exists GEN_CLK_1_PORT]} { puts "⚠ Warning: GEN_CLK_1_PORT not set!" }
+
+#     create_generated_clock -master_clock $CLK_NAME -source [get_ports $CLK_NAME] \
+#         -name $GEN_CLK_1_NAME -divide_by $GEN_CLK_1_DIV [get_ports $GEN_CLK_1_PORT]
+    #-name $GEN_CLK_1_NAME -divide_by $GEN_CLK_1_DIV [get_pins  $GEN_CLK_1_PIN]
+
+    # Apply the same uncertainty to generated clocks
+#     set_clock_uncertainty -setup $CLK_SETUP_SKEW [get_clocks $GEN_CLK_1_NAME]
+#     set_clock_uncertainty -hold  $CLK_HOLD_SKEW  [get_clocks $GEN_CLK_1_NAME]
+# }
+
+# ==============================================================
+# ============ Section 1.2 : Clock Latency =====================
+# ==============================================================
+
+# The 'set_clock_latency' command defines the delay between the
+# ideal clock source and when the clock edge actually reaches
+# sequential elements (registers, latches, etc.).
+#
+# This models real-world routing delay of the clock network.
+# - Use '-max' for setup analysis (worst-case, slow clock path)
+# - Use '-min' for hold analysis  (best-case, fast clock path)
+#
+# Syntax:
+#   set_clock_latency [-min] [-max] delay_value [get_clocks clock_name]
+#
+# Example:
+#   set_clock_latency -max 0.3 [get_clocks CLK]   ;# Setup analysis
+#   set_clock_latency -min 0.1 [get_clocks CLK]   ;# Hold analysis
+#
+# Notes:
+# - Pre-layout: usually set to 0 (ideal clock, no routing delay).
+# - Post-layout: replaced by actual values from Clock Tree Synthesis (CTS).
+# --------------------------------------------------------------
+
+# Example placeholder (override in main synthesis script if needed)
+#set_clock_latency -max 0.3 [get_clocks $CLK_NAME]
+#set_clock_latency -min 0.1 [get_clocks $CLK_NAME]
+
+
+# ==============================================================
+# ============ Section 1.3 : Clock Transition ==================
+# ==============================================================
+
+# The 'set_clock_transition' command defines the rise and fall
+# transition (slew rate) of the clock signal. It represents how
+# fast the clock switches between logic 0 and logic 1.
+#
+# Slew directly affects:
+# - Internal gate delays
+# - Setup and hold times of sequential elements
+#
+# Syntax:
+#   set_clock_transition [-rise] [-fall] transition_time [get_clocks clock_name]
+#
+# Example:
+#   set_clock_transition -rise 0.05 [get_clocks CLK]
+#   set_clock_transition -fall 0.05 [get_clocks CLK]
+#
+# Notes:
+# - These values should match the typical output slew of the driving cell.
+# - Can be refined after library characterization or CTS analysis.
+# --------------------------------------------------------------
+
+# Example placeholder (already defined above, modify if needed)
+#set_clock_transition -rise 0.05 [get_clocks $CLK_NAME]
+#set_clock_transition -fall 0.05 [get_clocks $CLK_NAME]
+
+
+# ==============================================================
+# ============ Section 2 : Clock Relationships =================
+# ==============================================================
+
+# Define asynchronous or exclusive clock groups if multiple clocks exist
+# Example:
+# set_clock_groups -asynchronous -group {CLK1} -group {CLK2}
+# set_clock_groups -asynchronous -group [get_clocks clock_name] -group [get_clocks clock_name]
+
+
+# ==============================================================
+# ============= Section 3 : Input / Output Delays ==============
+# ==============================================================
+
+# set_input_delay delay_value -clock $CLK_NAME  [-min] [-max]  [get_ports port_list]
+
+# Default delay values (as a fraction of the clock period)
+if {![info exists IN_DELAY]}  { set IN_DELAY  [expr 0.2 * $CLK_PER] }
+if {![info exists OUT_DELAY]} { set OUT_DELAY [expr 0.2 * $CLK_PER] }
+
+# ---------- Input Ports ----------
+set _INPUT_PORTS {MOSI SS_n}
+if {[llength $_INPUT_PORTS] > 0} {
+    set_input_delay $IN_DELAY -clock $CLK_NAME [get_ports $_INPUT_PORTS]
+}
+
+# ---------- Output Ports ----------
+set _OUTPUT_PORTS {MISO}
+if {[llength $_OUTPUT_PORTS] > 0} {
+    set_output_delay $OUT_DELAY -clock $CLK_NAME [get_ports $_OUTPUT_PORTS]
+}
+
+
+# ==============================================================
+# ======= Section 3.1 : Input Transition (Slew Constraints) =====
+# ==============================================================
+
+# Models the signal transition time (slew rate) of input ports.
+# The slew rate affects internal gate delays and setup/hold analysis accuracy.
+# Syntax:
+#   set_input_transition transition_value [-rise] [-fall] [-min] [-max] [get_ports port_list]
+
+# Default transition value (in ns) — override from synthesis script if needed.
+if {![info exists IN_TRANSITION]} { set IN_TRANSITION 0.1 }
+
+# Apply a uniform transition time to all input ports
+if {[llength $_INPUT_PORTS] > 0} {
+    set_input_transition $IN_TRANSITION [get_ports $_INPUT_PORTS]
+}
+
+# Example advanced usage (commented):
+# set_input_transition -rise 0.08 -fall 0.12 [get_ports {A B}]
+# set_input_transition -min  0.05 -max  0.15 [get_ports ALU_FUNC]
+
+
+# ==============================================================
+# ============== Section 4 : Driving Cells =====================
+# ==============================================================
+
+# Models the electrical drive strength of input ports.
+# Uses 'set_driving_cell' for accurate, library-based timing modeling.
+# Optionally, 'set_drive' can be used for simplified resistance-based approximation.
+
+# Define the library and driving cell
+if {![info exists DRIVING_LIB]}  { set DRIVING_LIB  "scmetro_tsmc_cl013g_rvt_ss_1p08v_125c" }
+if {![info exists DRIVING_CELL]} { set DRIVING_CELL "BUFX2M" }
+
+# List of input ports driven by the specified cell
+set _DRIVE_PORTS {MOSI SS_n}
+if {[llength $_DRIVE_PORTS] > 0} {
+    set_driving_cell -library $DRIVING_LIB -lib_cell $DRIVING_CELL -pin Y [get_ports $_DRIVE_PORTS]
+}
+
+# Optional simplified form (approximation)
+# set_drive [-rise] [-fall] [-min] [-max] resistance_value {port_list}
+
+
+# ==============================================================
+# =============== Section 5 : Output Loads =====================
+# ==============================================================
+
+# set_load [-pin_load] [-wire_load] [-min] [-max] cap_value {port_list}
+
+# Assign a capacitive load (in fF) to output ports
+if {![info exists OUT_LOAD]} { set OUT_LOAD 75 }
+
+set _LOAD_PORTS {MISO}
+if {[llength $_LOAD_PORTS] > 0} {
+    set_load $OUT_LOAD [get_ports $_LOAD_PORTS]
+}
+
+
+# ==============================================================
+# ============ Section 6 : Operating Conditions ================
+# ==============================================================
+
+# Define best (fast) and worst (slow) case process corners
+if {![info exists OC_MIN_LIB]} { set OC_MIN_LIB "scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c" }
+if {![info exists OC_MAX_LIB]} { set OC_MAX_LIB "scmetro_tsmc_cl013g_rvt_ss_1p08v_125c" }
+
+# > HOLD_ANALYSIS - SETUP_ANALYSIS
+set_operating_conditions \
+    -min_library $OC_MIN_LIB -min $OC_MIN_LIB \
+    -max_library $OC_MAX_LIB -max $OC_MAX_LIB     
+
+# set_operating_conditions [-min_library min_lib_NAME] [-min min_condition] \
+#                          [-max_library max_lib_NAME] [-max max_condition]
+
+
+# ==============================================================
+# ============ Section 7 : Wireload Model ======================
+# ==============================================================
+
+if {![info exists WL_MODEL_NAME]} { set WL_MODEL_NAME "tsmc13_wl30" }
+if {![info exists WL_MODEL_LIB]}  { set WL_MODEL_LIB  $OC_MIN_LIB }
+
+set_wire_load_model -name $WL_MODEL_NAME -library $WL_MODEL_LIB
+
+
+# ==============================================================
+# ========== Section 8 : Multicycle / False Paths ==============
+# ==============================================================
+
+# -----------------------------------------------------------------
+# The following commands define **timing exceptions** — special paths
+# that do NOT follow the default 1-cycle timing rule or should be
+# completely excluded from timing analysis.
+#
+# 1) Multicycle Path (MCP):
+#    Used when a data path is intentionally allowed to take multiple
+#    clock cycles to propagate (e.g., in FSMs, pipelines, or multi-cycle
+#    arithmetic units like multipliers or dividers).
+#
+# 2) False Path:
+#    Used to cut paths that are logically inactive or irrelevant during
+#    functional operation (e.g., test/debug logic, asynchronous control).
+# -----------------------------------------------------------------
+
+# ------------------------ Multicycle Paths ------------------------
+# Syntax:
+#   set_multicycle_path -setup <N> -from <start_point> -to <end_point>
+#   set_multicycle_path -hold  <N-1> -from <start_point> -to <end_point>
+#
+# Meaning:
+#   -setup <N> : Data can take N clock cycles to arrive (relaxes setup timing)
+#   -hold  <N-1>: Adjusts the hold check window to maintain timing correctness
+#
+# Example:
+#   The path from input port A to output CMP_Flag takes 3 clock cycles.
+#   Therefore, setup is 3 cycles and hold is 2 (setup-1).
+#
+#   set_multicycle_path -setup 3 -from [get_ports A] -to [get_ports CMP_Flag]
+#   set_multicycle_path -hold  2 -from [get_ports A] -to [get_ports CMP_Flag]
+#
+# Typical use cases:
+#   - FSM or ALU operations spanning multiple clock cycles
+#   - Pipelined arithmetic datapaths
+#   - Clock-enable-controlled registers
+# -----------------------------------------------------------------
+
+# -------------------------- False Paths ---------------------------
+# Syntax:
+#   set_false_path [-setup] [-hold] -from <start_point> -to <end_point>
+#
+# Meaning:
+#   Removes the specified path from timing analysis.
+#   The tool will NOT check setup or hold on these paths.
+#
+# Example:
+#   The TEST_DBG port drives an unused or test-only output path.
+#   This path is not relevant for functional timing.
+#
+#   set_false_path -from [get_ports TEST_DBG] -to [get_ports UNUSED_OUT]
+#
+# Typical use cases:
+#   - Asynchronous or debug control paths
+#   - Scan/test chains in functional mode
+#   - Cross-clock domain signals handled separately
+# -----------------------------------------------------------------
+
+
+
+# ==============================================================
+# ========== Section 9 : Area and Power Constraints ============
+# ==============================================================
+
+## Constrains design area
+set_max_area 0
+
+## Constrains design power - not working in my compiler version 
+# set_max_dynamic_power 8  mW
+# set_max_leakage_power 20 uW
+
+## Constrains design power
+set_dynamic_optimization true
+set_leakage_optimization true
+
+# ==============================================================
+# ============== Section 10 : Case Analysis ====================
+# ==============================================================
+
+# The 'set_case_analysis' command is used to fix a signal or pin
+# to a constant value (logic 0 or 1) during synthesis or timing analysis.
+# It models different operating modes or disables irrelevant logic.
+
+# Syntax:
+#   set_case_analysis <value> <object_list>
+# value        : 0 → logic low, 1 → logic high.
+# object_list  : Ports, pins, or nets (use [get_ports], [get_pins], or [get_nets]).
+
+# Example usage:
+#   set_case_analysis 0 [get_ports scan_enable]    ;# Normal mode
+#   set_case_analysis 1 [get_ports test_mode]      ;# Test mode
+#   set_case_analysis 1 [get_pins u_mux/sel]
+
+# To revert:
+#   remove_case_analysis [get_ports scan_enable]
+
+# Notes:
+# • Simplifies analysis by ignoring disabled paths.
+# • Logic depending on fixed signals may be optimized away.
+# • Must be re-applied after reloading the design.
+
+
+# ==============================================================
+# ===================== End of File ============================
+# ==============================================================
+
+puts "=================================================="
+puts "======     Constraint File Loaded (cons.tcl)  ====="
+puts "=================================================="

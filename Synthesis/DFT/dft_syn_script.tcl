@@ -1,0 +1,485 @@
+# ======================================================================
+# Generic Synopsys DC Synthesis Script — DFT (Scan) Flow
+# Author: Youssef Ahmed
+# Description: Reusable DFT synthesis script for RTL modules.
+#              Supports hierarchical / flattened compile flows,
+#              scan insertion, compile switches, and external
+#              constraint files. Mirrors the style of syn_script.tcl
+#              but adds scan configuration, DFT signal mapping,
+#              test protocol creation, DRC, and scan insertion,
+#              following the DFT Compiler flow:
+#                RTL Prep -> Libraries -> Read Design -> Read Constraints
+#                -> Test-Ready Compile -> DFT Constraints -> Pre-DFT DRC
+#                -> Preview DFT -> Insert DFT -> Post-DFT Optimization
+#                -> Post-DFT DRC -> Write Netlist
+# ======================================================================
+
+# ======================================================================
+# RTL PREREQUISITES (must exist in the RTL BEFORE running this script —
+# insert_dft cannot create these, they are design-level requirements):
+#   1) Design must expose scan ports: SI, SE, SO, scan_clk, scan_rst,
+#      test_mode (names are configurable below via *_PORT variables).
+#   2) Every primary/generated functional clock must be muxed with the
+#      scan clock, selected by test_mode:
+#         assign CLK_M = test_mode ? scan_clk : CLK ;
+#   3) Every primary/generated async set/reset must be muxed with the
+#      scan reset the same way:
+#         assign RST_M = test_mode ? scan_rst : RST ;
+#   4) Gated clocks must be bypassed in test mode (OR test_mode into the
+#      clock-gating enable) — see CLK_GATE_BYP_PORTS below.
+#   5) No combinational feedback loops; do not mix pos/neg edge flops
+#      on the same chain; do not use a clock as data.
+# ======================================================================
+
+# ================================================================
+# ===============  Section 0: Define Working Library  =============
+# ================================================================
+
+define_design_lib work -path ./work
+
+# ================================================================
+# ===============  Section 1: User Configuration  =================
+# ================================================================
+
+# -------- Top-level Design --------
+if {![info exists top_module]} {
+    set top_module "SPI_Wrapper"
+}
+
+# -------- RTL Source Files --------
+if {![info exists rtl_files]} {
+    set rtl_files [list     \
+        "SPIWrapperscan.v"     \
+        "SPISlave.v"       \
+        "SinglePortRam.v" \
+    ]
+}
+
+# -------- Library Paths --------
+set stdcell_lib_path "/home/IC/PROJECTS/SPI/std_cells"
+set rtl_lib_path     "/home/IC/PROJECTS/SPI/RTL"
+
+# -------- Liberty Files --------
+set SSLIB "scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db"
+set TTLIB "scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db"
+set FFLIB "scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db"
+
+# -------- Flatten Option --------
+if {![info exists flattened]} {
+    set flattened 0
+}
+
+# -------- Compile Effort --------
+if {![info exists map_effort]} {
+    set map_effort "medium" ;      # options: low | medium | high
+}
+
+# -------- Compile Ultra Mode --------
+# Both compile -scan and compile_ultra -scan are valid scan-aware
+# mapping commands in DC; toggle which one this script uses.
+if {![info exists use_compile_ultra]} {
+    set use_compile_ultra 0 ;   # 1 = use compile_ultra -scan instead of compile -scan
+}
+
+# -------- Constraint File --------
+if {![info exists cons_file]} {
+    set cons_file "./cons.tcl"
+}
+
+# -------- Scan Configuration --------
+# set_scan_configuration controls how insert_dft builds the chains.
+if {![info exists scan_clock_mixing]} {
+    set scan_clock_mixing "no_mix" ;      # options: no_mix | mix_clocks | clocked_scan
+}
+if {![info exists scan_style]} {
+    set scan_style "multiplexed_flip_flop" ; # options: multiplexed_flip_flop | clocked_scan | lssd
+}
+if {![info exists scan_replace]} {
+    set scan_replace "true"
+}
+if {![info exists scan_max_length]} {
+    set scan_max_length 100
+}
+
+# -------- DFT Signal Ports (override before sourcing if names differ) --------
+if {![info exists SCAN_CLK_PORT]}   { set SCAN_CLK_PORT   "scan_clk" }
+if {![info exists SCAN_RST_PORT]}   { set SCAN_RST_PORT   "scan_rst" }
+if {![info exists TEST_MODE_PORT]}  { set TEST_MODE_PORT  "test_mode" }
+if {![info exists SCAN_EN_PORT]}    { set SCAN_EN_PORT    "SE" }
+if {![info exists SCAN_IN_PORT]}    { set SCAN_IN_PORT    "SI" }
+if {![info exists SCAN_OUT_PORT]}   { set SCAN_OUT_PORT   "SO" }
+
+# -------- Scan Clock Timing (used by ScanClock -timing {t_on t_off}) --------
+if {![info exists SCAN_CLK_TIMING]} { set SCAN_CLK_TIMING {30 60} }
+
+# -------- Optional: Gated-Clock Bypass Ports --------
+# Per DFT guidelines, gated clocks must be bypassed in test mode.
+# If your design routes a dedicated bypass/enable port to each clock
+# gating cell, list those ports here (empty by default — most designs
+# handle this inside the RTL clock mux instead, see prerequisites above).
+if {![info exists CLK_GATE_BYP_PORTS]} { set CLK_GATE_BYP_PORTS {} }
+
+# -------- Test Timing Variables (Preclock Measure Protocol) --------
+set test_default_period         100 
+set test_default_delay          0 
+set test_default_bidir_delay    0 
+set test_default_strobe         20 
+set test_default_strobe_width   0 
+
+# -------- Optional: Export Test Protocol for ATPG (e.g. TetraMAX) --------
+if {![info exists write_test_protocol_file]} {
+    set write_test_protocol_file 0 ;  # 1 = write out the .spf test protocol file
+}
+
+# -------- GUI Option --------
+if {![info exists launch_gui]} {
+    set launch_gui 0 ;   # 1 = open gui_start at the end
+}
+
+# -------- Output Files --------
+if {$flattened == 0} {
+    set dft_netlist "sys_dft_hier.v"
+} else {
+    set dft_netlist "sys_dft_flat.v"
+}
+
+set area_report         "area_report.rpt"
+set power_report        "power_report.rpt"
+set timing_setup        "timing_setup.rpt"
+set timing_hold         "timing_hold.rpt"
+set dft_drc_report      "dft_drc.rpt"
+set test_protocol_file  "${top_module}.spf"
+
+# ================================================================
+# ===============  Section 2: Library Setup  =====================
+# ================================================================
+
+define_design_lib work -path ./work
+lappend search_path $stdcell_lib_path $rtl_lib_path
+
+# Target library for cell mapping
+set target_library [list $SSLIB $TTLIB $FFLIB]
+
+# Link library includes standard cells and hard macros
+set link_library [list "*" $SSLIB $TTLIB $FFLIB]
+
+# Optional: Add synthetic library (for DesignWare arithmetic IPs)
+# set Synthetic_library [list standard.sldb]
+
+# ================================================================
+# ===============  Section 3: Reading RTL Files  =================
+# ================================================================
+
+puts "=================================================="
+puts "==========      Reading RTL Files      =========="
+puts "=================================================="
+
+foreach f $rtl_files {
+    read_file -format verilog $f
+}
+
+current_design $top_module
+link
+check_design
+
+# ================================================================
+# ===============  Section 4: Constraints Loading  ===============
+# ================================================================
+
+puts "=================================================="
+puts "==========     Applying Constraints     =========="
+puts "=================================================="
+
+if {[file exists $cons_file]} {
+    puts "Sourcing external constraints: $cons_file"
+    source $cons_file
+} else {
+    puts "No constraint file found. Using default clock..."
+    create_clock -period 50 -name CLK1 [get_ports CLK]
+    set_dont_touch_network {CLK RST}
+}
+
+# ================================================================
+# ===============  Section 5: Scan Configuration  =================
+# ================================================================
+
+puts "=================================================="
+puts "==========     Configuring Scan Chains    ========="
+puts "=================================================="
+
+#### Scan Configuration Switches #########################################
+# -clock_mixing  : Controls whether flops on different clocks may share
+#                  a chain (no_mix | mix_clocks | clocked_scan).
+# -style         : Scan cell architecture (multiplexed_flip_flop | ...).
+# -replace       : Automatically replace non-scan flops with scan cells.
+# -max_length    : Maximum number of scan cells per chain.
+##########################################################################
+
+set_scan_configuration -clock_mixing $scan_clock_mixing \
+                        -style $scan_style \
+                        -replace $scan_replace \
+                        -max_length $scan_max_length
+
+# ================================================================
+# ===============  Section 6: Test-Ready Compile  ===================
+# ================================================================
+# no_autoungroup -> my DC version doesn't recognize it
+# compile -scan -no_autoungroup -map_effort $map_effort
+
+puts "=================================================="
+puts "==========    Running Test-Ready Compile   ========"
+puts "=================================================="
+
+if {$use_compile_ultra} {
+    if {$flattened} {
+        puts "Running compile_ultra -scan (flattened)..."
+        compile_ultra -scan -ungroup_all -map_effort $map_effort
+    } else {
+        puts "Running compile_ultra -scan (hierarchical)..."
+        compile_ultra -scan  -map_effort $map_effort
+    }
+} else {
+    if {$flattened} {
+        puts "Running compile -scan (flattened)..."
+        compile -scan -ungroup_all -map_effort $map_effort
+    } else {
+        puts "Running compile -scan (hierarchical)..."
+        compile -scan  -map_effort $map_effort
+    }
+}
+
+# ================================================================
+# ===============  Section 7: Test Timing Variables  ===============
+# ================================================================
+
+puts "=================================================="
+puts "==========    Setting Test Timing Vars    ========="
+puts "=================================================="
+
+# Preclock Measure Protocol (default protocol) — DC reads these exact
+# global variable names, so they must stay named as-is.
+set test_default_period       $test_default_period
+set test_default_delay        $test_default_delay
+set test_default_bidir_delay  $test_default_bidir_delay
+set test_default_strobe       $test_default_strobe
+set test_default_strobe_width $test_default_strobe_width
+
+# ================================================================
+# ===============  Section 8: Define DFT Signals  ==================
+# ================================================================
+
+puts "=================================================="
+puts "==========      Defining DFT Signals      ========="
+puts "=================================================="
+
+#---------------------------------------------------------------
+# dft_add_signal: thin wrapper around set_dft_signal that catches
+# failures so a design missing an optional port (e.g. no dedicated
+# scan_rst) doesn't kill the whole run — it just warns and moves on.
+# This also makes it trivial to add more signals later (e.g. extra
+# scan chains, generated test clocks, more gated-clock bypasses)
+# without repeating boilerplate.
+#---------------------------------------------------------------
+proc dft_add_signal {port_name args} {
+    if {[catch {
+        eval set_dft_signal -port [get_ports $port_name] $args
+    } err]} {
+        puts "Warning: could not apply set_dft_signal on port '$port_name' ($err)"
+    }
+}
+
+# ---------- Core DFT Signals ----------
+dft_add_signal $SCAN_CLK_PORT  -type ScanClock  -view existing_dft -timing $SCAN_CLK_TIMING
+dft_add_signal $SCAN_RST_PORT  -type Reset      -view existing_dft -active_state 0
+dft_add_signal $TEST_MODE_PORT -type Constant   -view existing_dft -active_state 1
+dft_add_signal $TEST_MODE_PORT -type TestMode   -view spec         -active_state 1
+dft_add_signal $SCAN_EN_PORT   -type ScanEnable -view spec         -active_state 1 -usage scan
+dft_add_signal $SCAN_IN_PORT   -type ScanDataIn  -view spec
+dft_add_signal $SCAN_OUT_PORT  -type ScanDataOut -view spec
+
+# ---------- Optional: Gated-Clock Bypass Signals ----------
+# For any dedicated clock-gating bypass ports listed above, mark them
+# as ScanEnable with -usage clock_gating so insert_dft wires them to
+# the identified clock-gating cells' test pins.
+foreach cg_port $CLK_GATE_BYP_PORTS {
+    dft_add_signal $cg_port -type ScanEnable -view spec -active_state 1 -usage clock_gating
+}
+
+# ---------- Extending Further (examples, uncomment/adapt as needed) ----------
+# Multiple independent scan chains (e.g. a second clock domain):
+#   dft_add_signal scan_clk2 -type ScanClock   -view existing_dft -timing {30 60}
+#   dft_add_signal SI2       -type ScanDataIn  -view spec
+#   dft_add_signal SO2       -type ScanDataOut -view spec
+#
+# Separate shift vs. capture clocks (instead of a single ScanClock):
+#   dft_add_signal scan_shift_clk -type ScanMasterClock -view existing_dft -timing {30 60}
+#   dft_add_signal func_clk       -type MasterClock      -view existing_dft -timing {30 60}
+
+# ================================================================
+# ===============  Strobe/Clock Timing Sanity Check  =============
+# ================================================================
+ 
+#---------------------------------------------------------------
+# The strobe time (when DFT Compiler samples output ports while
+# building the test protocol) must fall OUTSIDE the scan clock's
+# active window, or create_test_protocol/dft_drc will fail with:
+#   Error: Strobe time ... is in the active state of clock ... (TEST-1371)
+# This check catches that mismatch here, with a clear message,
+# instead of letting it surface later as a cryptic DC error.
+#---------------------------------------------------------------
+set _clk_rise [lindex $SCAN_CLK_TIMING 0]
+set _clk_fall [lindex $SCAN_CLK_TIMING 1]
+set _strobe_time [expr {$test_default_period * $test_default_strobe / 100.0}]
+ 
+if {$_strobe_time >= $_clk_rise && $_strobe_time <= $_clk_fall} {
+    puts "=================================================="
+    puts "ERROR: Strobe time ($_strobe_time) falls inside the"
+    puts "       scan_clk active window ($_clk_rise - $_clk_fall)."
+    puts "       Adjust test_default_strobe (or SCAN_CLK_TIMING)"
+    puts "       so the strobe lands before $_clk_rise or after"
+    puts "       $_clk_fall, then re-run."
+    puts "=================================================="
+    return -code error "Strobe/clock timing conflict — see message above."
+}
+
+# ================================================================
+# ===============  Section 9: Test Protocol & DRC  ==================
+# ================================================================
+
+puts "=================================================="
+puts "==========    Creating Test Protocol      ========="
+puts "=================================================="
+
+create_test_protocol
+
+if {$write_test_protocol_file} {
+    puts "Writing test protocol file: $test_protocol_file"
+    write_test_protocol -output $test_protocol_file
+}
+
+puts "=================================================="
+puts "==========     Pre-DFT Design Rule Check  ========="
+puts "=================================================="
+
+dft_drc -verbose > $dft_drc_report
+
+puts "=================================================="
+puts "==========          Preview DFT           ========="
+puts "=================================================="
+
+check_design 
+
+preview_dft -show scan_summary
+
+# ================================================================
+# ===============  Section 10: Scan Insertion  ======================
+# ================================================================
+
+puts "=================================================="
+puts "==========          Insert DFT             ========="
+puts "=================================================="
+
+insert_dft
+
+puts "=================================================="
+puts "==========   Post-DFT Optimization        ========="
+puts "=================================================="
+
+#---------------------------------------------------------------
+# Post-DFT Optimization: gate-level optimization performed after
+# inserting and mapping the newly added scan logic.
+#---------------------------------------------------------------
+check_design 
+
+compile -scan -incremental
+
+puts "=================================================="
+puts "==========   Post-DFT DRC + Coverage      ========="
+puts "=================================================="
+
+dft_drc -verbose -coverage_estimate >> $dft_drc_report
+
+# ================================================================
+# ===============  Section 11: Writing Outputs  ===================
+# ================================================================
+
+puts "=================================================="
+puts "==========       Writing Netlist         ========="
+puts "=================================================="
+
+#---------------------------------------------------------------
+# change_names:
+# Ensures all identifiers across all hierarchy levels are legal
+# in Verilog syntax. Removes illegal chars and keyword conflicts.
+#---------------------------------------------------------------
+change_names -hier -rule verilog
+
+#---------------------------------------------------------------
+# Write gate-level Verilog netlist (scan-inserted).
+#---------------------------------------------------------------
+write_file -format verilog -hierarchy -output $dft_netlist
+
+#---------------------------------------------------------------
+# Write SDC (Synopsys Design Constraints) file.
+#---------------------------------------------------------------
+write_sdc "${top_module}_dft_constraints.sdc"
+
+#---------------------------------------------------------------
+# Write SDF (Standard Delay Format) file.
+#---------------------------------------------------------------
+write_sdf "${top_module}_dft_timing.sdf"
+
+puts "=================================================="
+puts "==========   Netlist & Constraints Done   ========"
+puts "=================================================="
+
+# ================================================================
+# ===============  Section 12: Generating Reports  ================
+# ================================================================
+
+puts "=================================================="
+puts "==========       Generating Reports      ========="
+puts "=================================================="
+
+# ==================================================
+# report_area
+# --------------------------------------------------
+# Reports total and hierarchical cell area utilization
+# after scan insertion.
+# ==================================================
+report_area -hier > $area_report
+
+# ==================================================
+# report_power
+# --------------------------------------------------
+# Estimates total and hierarchical power consumption
+# after scan insertion.
+# ==================================================
+report_power -hier > $power_report
+
+# ==================================================
+# report_timing (Setup Check)
+# ==================================================
+report_timing -delay_type max -max_paths 100 > $timing_setup
+
+# ==================================================
+# report_timing (Hold Check)
+# ==================================================
+report_timing -delay_type min -max_paths 100 > $timing_hold
+
+# ==================================================
+# report_constraint
+# ==================================================
+report_constraint -all_violators > constraints.rpt
+
+puts "=================================================="
+puts "==========     DFT SYNTHESIS FINISHED!    ========="
+puts "=================================================="
+
+# ================================================================
+# ===============  Section 13: Optional GUI  =======================
+# ================================================================
+
+if {$launch_gui} {
+    gui_start
+}

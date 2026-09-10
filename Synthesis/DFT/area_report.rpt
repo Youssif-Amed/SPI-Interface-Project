@@ -1,0 +1,45 @@
+ 
+****************************************
+Report : area
+Design : SPI_Wrapper
+Version: K-2015.06
+Date   : Wed Aug 19 03:47:14 2026
+****************************************
+
+Library(s) Used:
+
+    scmetro_tsmc_cl013g_rvt_ss_1p08v_125c (File: /home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db)
+
+Number of ports:                          144
+Number of nets:                          7693
+Number of cells:                         7560
+Number of combinational cells:           3421
+Number of sequential cells:              4137
+Number of macros/black boxes:               0
+Number of buf/inv:                        343
+Number of references:                       6
+
+Combinational area:              43474.359476
+Buf/Inv area:                     2631.101198
+Noncombinational area:           68493.356293
+Macro/Black Box area:                0.000000
+Net Interconnect area:         3038852.644348
+
+Total cell area:                111967.715769
+Total area:                    3150820.360117
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area             Local cell area
+                                  --------------------  ------------------------------ 
+Hierarchical cell                 Absolute     Percent  Combi-      Noncombi-   Black-
+                                  Total        Total    national    national    boxes   Design
+--------------------------------  -----------  -------  ----------  ----------  ------  ----------------------
+SPI_Wrapper                       111967.7158    100.0     62.3651      0.0000  0.0000  SPI_Wrapper
+RAM                               111361.7153     99.5  43136.6466  68225.0687  0.0000  single_port_Ram_test_1
+SPI_slave                            543.6354      0.5    275.3478    268.2876  0.0000  SPI_Slave_test_1
+--------------------------------  -----------  -------  ----------  ----------  ------  ----------------------
+Total                                                   43474.3595  68493.3563  0.0000
+
+1

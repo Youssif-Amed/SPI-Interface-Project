@@ -1,0 +1,1112 @@
+                                        
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+                                        
+                 Version K-2015.06 for linux64 - May 28, 2015 
+                                        
+                    Copyright (c) 1988 - 2015 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/IC/.synopsys_dv_prefs.tcl
+# ======================================================================
+# Generic Synopsys DC Synthesis Script — DFT (Scan) Flow
+# Author: Youssef Ahmed
+# Description: Reusable DFT synthesis script for RTL modules.
+#              Supports hierarchical / flattened compile flows,
+#              scan insertion, compile switches, and external
+#              constraint files. Mirrors the style of syn_script.tcl
+#              but adds scan configuration, DFT signal mapping,
+#              test protocol creation, DRC, and scan insertion,
+#              following the DFT Compiler flow:
+#                RTL Prep -> Libraries -> Read Design -> Read Constraints
+#                -> Test-Ready Compile -> DFT Constraints -> Pre-DFT DRC
+#                -> Preview DFT -> Insert DFT -> Post-DFT Optimization
+#                -> Post-DFT DRC -> Write Netlist
+# ======================================================================
+# ======================================================================
+# RTL PREREQUISITES (must exist in the RTL BEFORE running this script —
+# insert_dft cannot create these, they are design-level requirements):
+#   1) Design must expose scan ports: SI, SE, SO, scan_clk, scan_rst,
+#      test_mode (names are configurable below via *_PORT variables).
+#   2) Every primary/generated functional clock must be muxed with the
+#      scan clock, selected by test_mode:
+#         assign CLK_M = test_mode ? scan_clk : CLK ;
+#   3) Every primary/generated async set/reset must be muxed with the
+#      scan reset the same way:
+#         assign RST_M = test_mode ? scan_rst : RST ;
+#   4) Gated clocks must be bypassed in test mode (OR test_mode into the
+#      clock-gating enable) — see CLK_GATE_BYP_PORTS below.
+#   5) No combinational feedback loops; do not mix pos/neg edge flops
+#      on the same chain; do not use a clock as data.
+# ======================================================================
+# ================================================================
+# ===============  Section 0: Define Working Library  =============
+# ================================================================
+define_design_lib work -path ./work
+1
+# ================================================================
+# ===============  Section 1: User Configuration  =================
+# ================================================================
+# -------- Top-level Design --------
+if {![info exists top_module]} {
+    set top_module "SPI_Wrapper"
+}
+SPI_Wrapper
+# -------- RTL Source Files --------
+if {![info exists rtl_files]} {
+    set rtl_files [list             "SPIWrapperscan.v"             "SPISlave.v"               "SinglePortRam.v"     ]
+}
+SPIWrapperscan.v SPISlave.v SinglePortRam.v
+# -------- Library Paths --------
+set stdcell_lib_path "/home/IC/PROJECTS/SPI/std_cells"
+/home/IC/PROJECTS/SPI/std_cells
+set rtl_lib_path     "/home/IC/PROJECTS/SPI/RTL"
+/home/IC/PROJECTS/SPI/RTL
+# -------- Liberty Files --------
+set SSLIB "scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db"
+scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db
+set TTLIB "scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db"
+scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db
+set FFLIB "scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db"
+scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db
+# -------- Flatten Option --------
+if {![info exists flattened]} {
+    set flattened 0
+}
+0
+# -------- Compile Effort --------
+if {![info exists map_effort]} {
+    set map_effort "medium" ;      # options: low | medium | high
+}
+medium
+# -------- Compile Ultra Mode --------
+# Both compile -scan and compile_ultra -scan are valid scan-aware
+# mapping commands in DC; toggle which one this script uses.
+if {![info exists use_compile_ultra]} {
+    set use_compile_ultra 0 ;   # 1 = use compile_ultra -scan instead of compile -scan
+}
+0
+# -------- Constraint File --------
+if {![info exists cons_file]} {
+    set cons_file "./cons.tcl"
+}
+./cons.tcl
+# -------- Scan Configuration --------
+# set_scan_configuration controls how insert_dft builds the chains.
+if {![info exists scan_clock_mixing]} {
+    set scan_clock_mixing "no_mix" ;      # options: no_mix | mix_clocks | clocked_scan
+}
+no_mix
+if {![info exists scan_style]} {
+    set scan_style "multiplexed_flip_flop" ; # options: multiplexed_flip_flop | clocked_scan | lssd
+}
+multiplexed_flip_flop
+if {![info exists scan_replace]} {
+    set scan_replace "true"
+}
+true
+if {![info exists scan_max_length]} {
+    set scan_max_length 100
+}
+100
+# -------- DFT Signal Ports (override before sourcing if names differ) --------
+if {![info exists SCAN_CLK_PORT]}   { set SCAN_CLK_PORT   "scan_clk" }
+scan_clk
+if {![info exists SCAN_RST_PORT]}   { set SCAN_RST_PORT   "scan_rst" }
+scan_rst
+if {![info exists TEST_MODE_PORT]}  { set TEST_MODE_PORT  "test_mode" }
+test_mode
+if {![info exists SCAN_EN_PORT]}    { set SCAN_EN_PORT    "SE" }
+SE
+if {![info exists SCAN_IN_PORT]}    { set SCAN_IN_PORT    "SI" }
+SI
+if {![info exists SCAN_OUT_PORT]}   { set SCAN_OUT_PORT   "SO" }
+SO
+# -------- Scan Clock Timing (used by ScanClock -timing {t_on t_off}) --------
+if {![info exists SCAN_CLK_TIMING]} { set SCAN_CLK_TIMING {30 60} }
+30 60
+# -------- Optional: Gated-Clock Bypass Ports --------
+# Per DFT guidelines, gated clocks must be bypassed in test mode.
+# If your design routes a dedicated bypass/enable port to each clock
+# gating cell, list those ports here (empty by default — most designs
+# handle this inside the RTL clock mux instead, see prerequisites above).
+if {![info exists CLK_GATE_BYP_PORTS]} { set CLK_GATE_BYP_PORTS {} }
+# -------- Test Timing Variables (Preclock Measure Protocol) --------
+set test_default_period         100 
+100
+set test_default_delay          0 
+0
+set test_default_bidir_delay    0 
+0
+set test_default_strobe         20 
+20
+set test_default_strobe_width   0 
+0
+# -------- Optional: Export Test Protocol for ATPG (e.g. TetraMAX) --------
+if {![info exists write_test_protocol_file]} {
+    set write_test_protocol_file 0 ;  # 1 = write out the .spf test protocol file
+}
+0
+# -------- GUI Option --------
+if {![info exists launch_gui]} {
+    set launch_gui 0 ;   # 1 = open gui_start at the end
+}
+0
+# -------- Output Files --------
+if {$flattened == 0} {
+    set dft_netlist "sys_dft_hier.v"
+} else {
+    set dft_netlist "sys_dft_flat.v"
+}
+sys_dft_hier.v
+set area_report         "area_report.rpt"
+area_report.rpt
+set power_report        "power_report.rpt"
+power_report.rpt
+set timing_setup        "timing_setup.rpt"
+timing_setup.rpt
+set timing_hold         "timing_hold.rpt"
+timing_hold.rpt
+set dft_drc_report      "dft_drc.rpt"
+dft_drc.rpt
+set test_protocol_file  "${top_module}.spf"
+SPI_Wrapper.spf
+# ================================================================
+# ===============  Section 2: Library Setup  =====================
+# ================================================================
+define_design_lib work -path ./work
+1
+lappend search_path $stdcell_lib_path $rtl_lib_path
+. /opt/Synopsys/Synplify2015/libraries/syn /opt/Synopsys/Synplify2015/minpower/syn /opt/Synopsys/Synplify2015/dw/syn_ver /opt/Synopsys/Synplify2015/dw/sim_ver /home/IC/PROJECTS/SPI/std_cells /home/IC/PROJECTS/SPI/RTL
+# Target library for cell mapping
+set target_library [list $SSLIB $TTLIB $FFLIB]
+scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db
+# Link library includes standard cells and hard macros
+set link_library [list "*" $SSLIB $TTLIB $FFLIB]
+* scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db
+# Optional: Add synthetic library (for DesignWare arithmetic IPs)
+# set Synthetic_library [list standard.sldb]
+# ================================================================
+# ===============  Section 3: Reading RTL Files  =================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========      Reading RTL Files      =========="
+==========      Reading RTL Files      ==========
+puts "=================================================="
+==================================================
+foreach f $rtl_files {
+    read_file -format verilog $f
+}
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db'
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db'
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db'
+Loading db file '/opt/Synopsys/Synplify2015/libraries/syn/gtech.db'
+Loading db file '/opt/Synopsys/Synplify2015/libraries/syn/standard.sldb'
+  Loading link library 'scmetro_tsmc_cl013g_rvt_ss_1p08v_125c'
+  Loading link library 'scmetro_tsmc_cl013g_rvt_tt_1p2v_25c'
+  Loading link library 'scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c'
+  Loading link library 'gtech'
+Loading verilog file '/home/IC/PROJECTS/SPI/RTL/SPIWrapperscan.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/IC/PROJECTS/SPI/RTL/SPIWrapperscan.v
+Presto compilation completed successfully.
+Current design is now '/home/IC/PROJECTS/SPI/RTL/SPI_Wrapper.db:SPI_Wrapper'
+Loaded 1 design.
+Current design is 'SPI_Wrapper'.
+Loading verilog file '/home/IC/PROJECTS/SPI/RTL/SPISlave.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/IC/PROJECTS/SPI/RTL/SPISlave.v
+
+Statistics for case statements in always block at line 34 in file
+	'/home/IC/PROJECTS/SPI/RTL/SPISlave.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            35            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 108 in file
+	'/home/IC/PROJECTS/SPI/RTL/SPISlave.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           113            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 155 in file
+	'/home/IC/PROJECTS/SPI/RTL/SPISlave.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           162            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine SPI_Slave line 27 in file
+		'/home/IC/PROJECTS/SPI/RTL/SPISlave.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       CS_reg        | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine SPI_Slave line 155 in file
+		'/home/IC/PROJECTS/SPI/RTL/SPISlave.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   rx_counter_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   tx_counter_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+===========================================================
+| block name/line  | Inputs | Outputs | # sel inputs | MB |
+===========================================================
+|  SPI_Slave/141   |   8    |    1    |      3       | N  |
+===========================================================
+Presto compilation completed successfully.
+Current design is now '/home/IC/PROJECTS/SPI/RTL/SPI_Slave.db:SPI_Slave'
+Loaded 1 design.
+Current design is 'SPI_Slave'.
+Loading verilog file '/home/IC/PROJECTS/SPI/RTL/SinglePortRam.v'
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/IC/PROJECTS/SPI/RTL/SinglePortRam.v
+Warning:  /home/IC/PROJECTS/SPI/RTL/SinglePortRam.v:33: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 27 in file
+	'/home/IC/PROJECTS/SPI/RTL/SinglePortRam.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            33            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine single_port_Ram line 27 in file
+		'/home/IC/PROJECTS/SPI/RTL/SinglePortRam.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      dout_reg       | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    tx_valid_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|  addr_internal_reg  | Flip-flop |   8   |  Y  | N  | N  | N  | N  | N  | N  |
+|       mem_reg       | Flip-flop | 2048  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+=============================================================
+|  block name/line   | Inputs | Outputs | # sel inputs | MB |
+=============================================================
+| single_port_Ram/45 |  256   |    8    |      8       | N  |
+=============================================================
+Presto compilation completed successfully.
+Current design is now '/home/IC/PROJECTS/SPI/RTL/single_port_Ram.db:single_port_Ram'
+Loaded 1 design.
+Current design is 'single_port_Ram'.
+current_design $top_module
+Current design is 'SPI_Wrapper'.
+{SPI_Wrapper}
+link
+
+  Linking design 'SPI_Wrapper'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (3 designs)               /home/IC/PROJECTS/SPI/RTL/SPI_Wrapper.db, etc
+  scmetro_tsmc_cl013g_rvt_ss_1p08v_125c (library) /home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db
+  scmetro_tsmc_cl013g_rvt_tt_1p2v_25c (library) /home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db
+  scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c (library) /home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db
+
+1
+check_design
+ 
+****************************************
+check_design summary:
+Version:     K-2015.06
+Date:        Wed Aug 19 03:38:06 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      3
+    Unconnected ports (LINT-28)                                     3
+
+Cells                                                               8
+    Cells do not drive (LINT-1)                                     8
+--------------------------------------------------------------------------------
+
+Warning: In design 'SPI_Slave', cell 'B_65' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'B_66' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'B_67' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'B_68' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'C747' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'C751' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'C755' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Slave', cell 'C759' does not drive any nets. (LINT-1)
+Warning: In design 'SPI_Wrapper', port 'SI' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Wrapper', port 'SE' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Wrapper', port 'SO' is not connected to any nets. (LINT-28)
+1
+# ================================================================
+# ===============  Section 4: Constraints Loading  ===============
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========     Applying Constraints     =========="
+==========     Applying Constraints     ==========
+puts "=================================================="
+==================================================
+if {[file exists $cons_file]} {
+    puts "Sourcing external constraints: $cons_file"
+    source $cons_file
+} else {
+    puts "No constraint file found. Using default clock..."
+    create_clock -period 50 -name CLK1 [get_ports CLK]
+    set_dont_touch_network {CLK RST}
+}
+Sourcing external constraints: ./cons.tcl
+Warning: Design rule attributes from the driving cell will be
+	set on the port. (UID-401)
+Warning: Design rule attributes from the driving cell will be
+	set on the port. (UID-401)
+Using operating conditions 'scmetro_tsmc_cl013g_rvt_ss_1p08v_125c' found in library 'scmetro_tsmc_cl013g_rvt_ss_1p08v_125c'.
+Using operating conditions 'scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c' found in library 'scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c'.
+==================================================
+======     Constraint File Loaded (cons.tcl)  =====
+==================================================
+# ================================================================
+# ===============  Section 5: Scan Configuration  =================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========     Configuring Scan Chains    ========="
+==========     Configuring Scan Chains    =========
+puts "=================================================="
+==================================================
+#### Scan Configuration Switches #########################################
+# -clock_mixing  : Controls whether flops on different clocks may share
+#                  a chain (no_mix | mix_clocks | clocked_scan).
+# -style         : Scan cell architecture (multiplexed_flip_flop | ...).
+# -replace       : Automatically replace non-scan flops with scan cells.
+# -max_length    : Maximum number of scan cells per chain.
+##########################################################################
+set_scan_configuration -clock_mixing $scan_clock_mixing                         -style $scan_style                         -replace $scan_replace                         -max_length $scan_max_length
+Accepted scan configuration for modes: all_dft
+1
+# ================================================================
+# ===============  Section 6: Test-Ready Compile  ===================
+# ================================================================
+# no_autoungroup -> my DC version doesn't recognize it
+# compile -scan -no_autoungroup -map_effort $map_effort
+puts "=================================================="
+==================================================
+puts "==========    Running Test-Ready Compile   ========"
+==========    Running Test-Ready Compile   ========
+puts "=================================================="
+==================================================
+if {$use_compile_ultra} {
+    if {$flattened} {
+        puts "Running compile_ultra -scan (flattened)..."
+        compile_ultra -scan -ungroup_all -map_effort $map_effort
+    } else {
+        puts "Running compile_ultra -scan (hierarchical)..."
+        compile_ultra -scan  -map_effort $map_effort
+    }
+} else {
+    if {$flattened} {
+        puts "Running compile -scan (flattened)..."
+        compile -scan -ungroup_all -map_effort $map_effort
+    } else {
+        puts "Running compile -scan (hierarchical)..."
+        compile -scan  -map_effort $map_effort
+    }
+}
+Running compile -scan (hierarchical)...
+Information: Performing power optimization. (PWR-850)
+Information: Choosing a test methodology will restrict the optimization of sequential cells. (UIO-12)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | K-2015.06-DWBB_201506.0 |     *     |
+| Licensed DW Building Blocks        |                         |           |
+============================================================================
+
+
+Information: There are 11 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+  Loading target library 'scmetro_tsmc_cl013g_rvt_ss_1p08v_125c'
+  Loading target library 'scmetro_tsmc_cl013g_rvt_tt_1p2v_25c'
+  Loading target library 'scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c'
+Warning: Operating condition scmetro_tsmc_cl013g_rvt_ss_1p08v_125c set on design SPI_Wrapper has different process,
+voltage and temperatures parameters than the parameters at which target library 
+scmetro_tsmc_cl013g_rvt_tt_1p2v_25c is characterized. Delays may be inaccurate as a result. (OPT-998)
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'single_port_Ram'
+  Processing 'SPI_Slave'
+Information: The register 'CS_reg[2]' is a constant and will be removed. (OPT-1206)
+Information: The register 'tx_counter_reg[3]' is a constant and will be removed. (OPT-1206)
+  Processing 'SPI_Wrapper'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'HOLDX1M' in the library 'scmetro_tsmc_cl013g_rvt_ss_1p08v_125c' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+
+  Beginning Implementation Selection
+  ----------------------------------
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:33 2948003.9      0.00       0.0     106.8                           175551104.0000
+    0:00:34 2948003.9      0.00       0.0     106.8                           175551104.0000
+    0:00:34 2948003.9      0.00       0.0     106.8                           175551104.0000
+    0:00:34 2948003.9      0.00       0.0     106.8                           175551104.0000
+    0:00:34 2948003.9      0.00       0.0     106.8                           175551104.0000
+    0:00:44 2868310.0      0.00       0.0      20.8                           68105960.0000
+    0:00:45 2868233.5      0.00       0.0      20.8                           68057288.0000
+    0:00:46 2868233.5      0.00       0.0      20.8                           68057288.0000
+    0:00:46 2868233.5      0.00       0.0      20.8                           68057288.0000
+    0:00:46 2868233.5      0.00       0.0      20.8                           68057288.0000
+    0:00:46 2868233.5      0.00       0.0      20.8                           68057288.0000
+    0:00:47 2868666.4      0.00       0.0      20.4                           68067320.0000
+    0:00:47 2869098.2      0.00       0.0      20.1                           68075104.0000
+    0:00:47 2869234.7      0.00       0.0      20.0                           68074192.0000
+    0:00:47 2869234.7      0.00       0.0      20.0                           68074192.0000
+    0:00:47 2869234.7      0.00       0.0      20.0                           68074192.0000
+    0:00:47 2869234.7      0.00       0.0      20.0                           68074192.0000
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:47 2869234.7      0.00       0.0      20.0                           68074192.0000
+    0:00:47 2869234.7      0.00       0.0      20.0                           68074192.0000
+    0:01:05 2588168.5      0.00       0.0      24.1                           65828144.0000
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:01:05 2588168.5      0.00       0.0      24.1                           65828144.0000
+    0:01:06 2589041.4      0.00       0.0      19.9                           65861844.0000
+
+
+  Beginning Power Optimization
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:01:06 2589041.4      0.00       0.0      19.9                           65861844.0000
+    0:01:06 2589041.4      0.00       0.0      19.9                           65861844.0000
+    0:01:08 2587745.0      0.00       0.0      19.9                           65828732.0000
+    0:01:09 2587745.0      0.00       0.0      19.9                           65828732.0000
+    0:01:09 2587745.0      0.00       0.0      19.9                           65828732.0000
+    0:01:09 2587745.0      0.00       0.0      19.9                           65828732.0000
+    0:01:10 2587745.0      0.00       0.0      19.9                           65828732.0000
+    0:01:10 2587734.4      0.00       0.0      19.9                           65817980.0000
+    0:01:10 2587734.4      0.00       0.0      19.9                           65817980.0000
+    0:01:10 2587734.4      0.00       0.0      19.9                           65817980.0000
+    0:01:10 2587734.4      0.00       0.0      19.9                           65817980.0000
+    0:01:10 2587734.4      0.00       0.0      19.9                           65817980.0000
+    0:01:10 2587734.4      0.00       0.0      19.9                           65817980.0000
+    0:01:13 2577456.6      0.00       0.0      19.9                           65357880.0000
+    0:01:18 2571581.2      0.00       0.0      19.9                           65087812.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+
+
+  Beginning Area-Recovery Phase  (max_area 0)
+  -----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:20 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:22 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:22 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:23 2570423.5      0.00       0.0      19.9                           65055664.0000
+    0:01:26 2570134.1      0.00       0.0      19.9                           65047628.0000
+    0:01:27 2570134.1      0.00       0.0      19.9                           65047628.0000
+    0:01:27 2570134.1      0.00       0.0      19.9                           65047628.0000
+    0:01:27 2570134.1      0.00       0.0      19.9                           65047628.0000
+    0:01:27 2570134.1      0.00       0.0      19.9                           65047628.0000
+    0:01:27 2570134.1      0.00       0.0      19.9                           65047628.0000
+    0:01:27 2570134.1      0.00       0.0      19.9                           65047628.0000
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+    0:01:29 2570302.3      0.00       0.0      91.2                           65004252.0000
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db'
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db'
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'SPI_Wrapper' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'RAM/clk': 2071 load(s), 1 driver(s)
+1
+# ================================================================
+# ===============  Section 7: Test Timing Variables  ===============
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========    Setting Test Timing Vars    ========="
+==========    Setting Test Timing Vars    =========
+puts "=================================================="
+==================================================
+# Preclock Measure Protocol (default protocol) — DC reads these exact
+# global variable names, so they must stay named as-is.
+set test_default_period       $test_default_period
+100
+set test_default_delay        $test_default_delay
+0
+set test_default_bidir_delay  $test_default_bidir_delay
+0
+set test_default_strobe       $test_default_strobe
+20
+set test_default_strobe_width $test_default_strobe_width
+0
+# ================================================================
+# ===============  Section 8: Define DFT Signals  ==================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========      Defining DFT Signals      ========="
+==========      Defining DFT Signals      =========
+puts "=================================================="
+==================================================
+#---------------------------------------------------------------
+# dft_add_signal: thin wrapper around set_dft_signal that catches
+# failures so a design missing an optional port (e.g. no dedicated
+# scan_rst) doesn't kill the whole run — it just warns and moves on.
+# This also makes it trivial to add more signals later (e.g. extra
+# scan chains, generated test clocks, more gated-clock bypasses)
+# without repeating boilerplate.
+#---------------------------------------------------------------
+proc dft_add_signal {port_name args} {
+    if {[catch {
+        eval set_dft_signal -port [get_ports $port_name] $args
+    } err]} {
+        puts "Warning: could not apply set_dft_signal on port '$port_name' ($err)"
+    }
+}
+# ---------- Core DFT Signals ----------
+dft_add_signal $SCAN_CLK_PORT  -type ScanClock  -view existing_dft -timing $SCAN_CLK_TIMING
+Accepted dft signal specification for modes: all_dft
+dft_add_signal $SCAN_RST_PORT  -type Reset      -view existing_dft -active_state 0
+Accepted dft signal specification for modes: all_dft
+dft_add_signal $TEST_MODE_PORT -type Constant   -view existing_dft -active_state 1
+Accepted dft signal specification for modes: all_dft
+dft_add_signal $TEST_MODE_PORT -type TestMode   -view spec         -active_state 1
+Accepted dft signal specification for modes: all_dft
+dft_add_signal $SCAN_EN_PORT   -type ScanEnable -view spec         -active_state 1 -usage scan
+Accepted dft signal specification for modes: all_dft
+dft_add_signal $SCAN_IN_PORT   -type ScanDataIn  -view spec
+Accepted dft signal specification for modes: all_dft
+dft_add_signal $SCAN_OUT_PORT  -type ScanDataOut -view spec
+Accepted dft signal specification for modes: all_dft
+# ---------- Optional: Gated-Clock Bypass Signals ----------
+# For any dedicated clock-gating bypass ports listed above, mark them
+# as ScanEnable with -usage clock_gating so insert_dft wires them to
+# the identified clock-gating cells' test pins.
+foreach cg_port $CLK_GATE_BYP_PORTS {
+    dft_add_signal $cg_port -type ScanEnable -view spec -active_state 1 -usage clock_gating
+}
+# ---------- Extending Further (examples, uncomment/adapt as needed) ----------
+# Multiple independent scan chains (e.g. a second clock domain):
+#   dft_add_signal scan_clk2 -type ScanClock   -view existing_dft -timing {30 60}
+#   dft_add_signal SI2       -type ScanDataIn  -view spec
+#   dft_add_signal SO2       -type ScanDataOut -view spec
+#
+# Separate shift vs. capture clocks (instead of a single ScanClock):
+#   dft_add_signal scan_shift_clk -type ScanMasterClock -view existing_dft -timing {30 60}
+#   dft_add_signal func_clk       -type MasterClock      -view existing_dft -timing {30 60}
+# ================================================================
+# ===============  Strobe/Clock Timing Sanity Check  =============
+# ================================================================
+#---------------------------------------------------------------
+# The strobe time (when DFT Compiler samples output ports while
+# building the test protocol) must fall OUTSIDE the scan clock's
+# active window, or create_test_protocol/dft_drc will fail with:
+#   Error: Strobe time ... is in the active state of clock ... (TEST-1371)
+# This check catches that mismatch here, with a clear message,
+# instead of letting it surface later as a cryptic DC error.
+#---------------------------------------------------------------
+set _clk_rise [lindex $SCAN_CLK_TIMING 0]
+30
+set _clk_fall [lindex $SCAN_CLK_TIMING 1]
+60
+set _strobe_time [expr {$test_default_period * $test_default_strobe / 100.0}]
+20.0
+if {$_strobe_time >= $_clk_rise && $_strobe_time <= $_clk_fall} {
+    puts "=================================================="
+    puts "ERROR: Strobe time ($_strobe_time) falls inside the"
+    puts "       scan_clk active window ($_clk_rise - $_clk_fall)."
+    puts "       Adjust test_default_strobe (or SCAN_CLK_TIMING)"
+    puts "       so the strobe lands before $_clk_rise or after"
+    puts "       $_clk_fall, then re-run."
+    puts "=================================================="
+    return -code error "Strobe/clock timing conflict — see message above."
+}
+# ================================================================
+# ===============  Section 9: Test Protocol & DRC  ==================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========    Creating Test Protocol      ========="
+==========    Creating Test Protocol      =========
+puts "=================================================="
+==================================================
+create_test_protocol
+In mode: all_dft...
+
+Information: Starting test protocol creation. (TEST-219)
+  ...reading user specified clock signals...
+Information: Identified system/test clock port scan_clk (30.0,60.0). (TEST-265)
+  ...reading user specified asynchronous signals...
+Information: Identified active low asynchronous control port scan_rst. (TEST-266)
+1
+if {$write_test_protocol_file} {
+    puts "Writing test protocol file: $test_protocol_file"
+    write_test_protocol -output $test_protocol_file
+}
+puts "=================================================="
+==================================================
+puts "==========     Pre-DFT Design Rule Check  ========="
+==========     Pre-DFT Design Rule Check  =========
+puts "=================================================="
+==================================================
+dft_drc -verbose > $dft_drc_report
+puts "=================================================="
+==================================================
+puts "==========          Preview DFT           ========="
+==========          Preview DFT           =========
+puts "=================================================="
+==================================================
+check_design 
+ 
+****************************************
+check_design summary:
+Version:     K-2015.06
+Date:        Wed Aug 19 03:39:59 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     12
+    Unconnected ports (LINT-28)                                    12
+--------------------------------------------------------------------------------
+
+Warning: In design 'SPI_Wrapper', port 'SI' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Wrapper', port 'SE' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Wrapper', port 'SO' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[7]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[6]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[5]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[4]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[3]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[2]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[1]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_data[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave', port 'tx_valid' is not connected to any nets. (LINT-28)
+1
+preview_dft -show scan_summary
+Warning: Design 'SPI_Wrapper' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+  Information: Using test design rule information from previous dft_drc run.
+  Architecting Scan Chains
+
+****************************************
+Preview_dft report
+For    : 'Insert_dft' command
+Design : SPI_Wrapper
+Version: K-2015.06
+Date   : Wed Aug 19 03:39:59 2026
+****************************************
+
+Number of chains: 21
+Scan methodology: full_scan
+Scan style: multiplexed_flip_flop
+Clock domain: no_mix
+
+Chain      Scan Ports (si --> so)        # of Cells   Inst/Chain               Clock (port, time, edge)
+-----      ----------------------        ----------   ----------               ------------------------
+S 1        SI -->  SO                            99   RAM/addr_internal_reg[0] (scan_clk, 30.0, rising) 
+S 2        test_si2 -->  test_so2                99   RAM/mem_reg[10][3]       (scan_clk, 30.0, rising) 
+S 3        test_si3 -->  test_so3                99   RAM/mem_reg[22][6]       (scan_clk, 30.0, rising) 
+S 4        test_si4 -->  test_so4                99   RAM/mem_reg[35][1]       (scan_clk, 30.0, rising) 
+S 5        test_si5 -->  test_so5                99   RAM/mem_reg[47][4]       (scan_clk, 30.0, rising) 
+S 6        test_si6 -->  test_so6                99   RAM/mem_reg[59][7]       (scan_clk, 30.0, rising) 
+S 7        test_si7 -->  test_so7                99   RAM/mem_reg[72][2]       (scan_clk, 30.0, rising) 
+S 8        test_si8 -->  test_so8                99   RAM/mem_reg[84][5]       (scan_clk, 30.0, rising) 
+S 9        test_si9 -->  test_so9                99   RAM/mem_reg[97][0]       (scan_clk, 30.0, rising) 
+S 10       test_si10 -->  test_so10              99   RAM/mem_reg[109][3]      (scan_clk, 30.0, rising) 
+S 11       test_si11 -->  test_so11              99   RAM/mem_reg[121][6]      (scan_clk, 30.0, rising) 
+S 12       test_si12 -->  test_so12              99   RAM/mem_reg[134][1]      (scan_clk, 30.0, rising) 
+S 13       test_si13 -->  test_so13              99   RAM/mem_reg[146][4]      (scan_clk, 30.0, rising) 
+S 14       test_si14 -->  test_so14              98   RAM/mem_reg[158][7]      (scan_clk, 30.0, rising) 
+S 15       test_si15 -->  test_so15              98   RAM/mem_reg[171][1]      (scan_clk, 30.0, rising) 
+S 16       test_si16 -->  test_so16              98   RAM/mem_reg[183][3]      (scan_clk, 30.0, rising) 
+S 17       test_si17 -->  test_so17              98   RAM/mem_reg[195][5]      (scan_clk, 30.0, rising) 
+S 18       test_si18 -->  test_so18              98   RAM/mem_reg[207][7]      (scan_clk, 30.0, rising) 
+S 19       test_si19 -->  test_so19              98   RAM/mem_reg[220][1]      (scan_clk, 30.0, rising) 
+S 20       test_si20 -->  test_so20              98   RAM/mem_reg[232][3]      (scan_clk, 30.0, rising) 
+S 21       test_si21 -->  test_so21              98   RAM/mem_reg[244][5]      (scan_clk, 30.0, rising) 
+1
+# ================================================================
+# ===============  Section 10: Scan Insertion  ======================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========          Insert DFT             ========="
+==========          Insert DFT             =========
+puts "=================================================="
+==================================================
+insert_dft
+Warning: Design 'SPI_Wrapper' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+  Information: Using test design rule information from previous dft_drc run.
+  Architecting Scan Chains
+  Routing Scan Chains
+  Routing Global Signals
+  Mapping New Logic
+Resetting current test mode
+Warning: Design 'SPI_Wrapper' contains 2 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+  Beginning Mapping Optimizations
+  -------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+
+
+  Beginning Phase 1 Design Rule Fixing  (max_transition)  (max_capacitance)
+  ------------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:58 3153123.9      0.00       0.0      91.4 SPI_slave/n4             
+    0:01:58 3153123.9      0.00       0.0      91.4 SPI_slave/n4             
+    0:01:58 3153123.9      0.00       0.0      91.3 SPI_slave/rx_data_indx[1]
+    0:01:58 3153123.9      0.00       0.0      91.3 SPI_slave/rx_data_indx[1]
+    0:01:58 3153123.9      0.00       0.0      91.3 RAM/n8542                
+    0:01:58 3153123.9      0.00       0.0      91.2 RAM/n8539                
+    0:01:58 3153267.4      0.00       0.0      91.2 RAM/n9361                
+
+
+  Beginning Phase 2 Design Rule Fixing  (max_transition)  (max_capacitance)
+  ------------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+
+1
+puts "=================================================="
+==================================================
+puts "==========   Post-DFT Optimization        ========="
+==========   Post-DFT Optimization        =========
+puts "=================================================="
+==================================================
+#---------------------------------------------------------------
+# Post-DFT Optimization: gate-level optimization performed after
+# inserting and mapping the newly added scan logic.
+#---------------------------------------------------------------
+check_design 
+ 
+****************************************
+check_design summary:
+Version:     K-2015.06
+Date:        Wed Aug 19 03:40:05 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      9
+    Unconnected ports (LINT-28)                                     9
+--------------------------------------------------------------------------------
+
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[7]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[6]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[5]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[4]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[3]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[2]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[1]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_data[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'SPI_Slave_test_1', port 'tx_valid' is not connected to any nets. (LINT-28)
+1
+compile -scan -incremental
+Information: Performing power optimization. (PWR-850)
+Information: Choosing a test methodology will restrict the optimization of sequential cells. (UIO-12)
+
+Information: There are 9 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Operating condition scmetro_tsmc_cl013g_rvt_ss_1p08v_125c set on design SPI_Wrapper has different process,
+voltage and temperatures parameters than the parameters at which target library 
+scmetro_tsmc_cl013g_rvt_tt_1p2v_25c is characterized. Delays may be inaccurate as a result. (OPT-998)
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'HOLDX1M' in the library 'scmetro_tsmc_cl013g_rvt_ss_1p08v_125c' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+
+  Beginning Mapping Optimizations  (Medium effort)  (Incremental)
+  -------------------------------
+
+  Beginning Incremental Implementation Selection
+  ----------------------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:12 3153099.2      0.00       0.0      19.9                           65049244.0000
+    0:00:13 3153099.2      0.00       0.0      19.9                           65049244.0000
+    0:00:13 3153099.2      0.00       0.0      19.9                           65049244.0000
+    0:00:13 3153099.2      0.00       0.0      19.9                           65049244.0000
+    0:00:13 3153099.2      0.00       0.0      19.9                           65049244.0000
+    0:00:20 3153099.2      0.00       0.0      23.7                           59554532.0000
+    0:00:20 3153099.2      0.00       0.0      23.7                           59554532.0000
+    0:00:20 3153099.2      0.00       0.0      23.7                           59554532.0000
+    0:00:20 3153099.2      0.00       0.0      23.7                           59554532.0000
+    0:00:20 3153099.2      0.00       0.0      23.7                           59554532.0000
+    0:01:39 3153245.1      0.00       0.0      23.7                           59559156.0000
+    0:02:58 3153248.6      0.00       0.0      23.7                           59562608.0000
+    0:02:58 3153248.6      0.00       0.0      23.7                           59562608.0000
+    0:02:58 3153248.6      0.00       0.0      23.7                           59562608.0000
+    0:02:58 3153248.6      0.00       0.0      23.7                           59562608.0000
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:03:14 3153248.6      0.00       0.0      23.7                           59562608.0000
+    0:03:14 3153248.6      0.00       0.0      23.7                           59562608.0000
+    0:03:16 3152541.6      0.00       0.0      31.7                           59553068.0000
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:03:16 3152541.6      0.00       0.0      31.7                           59553068.0000
+    0:03:54 3153986.3      0.00       0.0      23.7 RAM/n9566                 59591712.0000
+    0:06:28 3154280.4      0.00       0.0      23.7                           59612780.0000
+
+
+  Beginning Power Optimization
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:06:28 3154280.4      0.00       0.0      23.7                           59612780.0000
+    0:06:28 3154280.4      0.00       0.0      23.7                           59612780.0000
+    0:06:30 3153849.8      0.00       0.0      23.7                           59607432.0000
+    0:06:30 3153419.2      0.00       0.0      23.7                           59602080.0000
+    0:06:30 3153419.2      0.00       0.0      23.7                           59602080.0000
+    0:06:30 3153419.2      0.00       0.0      23.7                           59602080.0000
+    0:06:30 3153419.2      0.00       0.0      23.7                           59602080.0000
+    0:06:34 3150942.7      0.00       0.0      23.7                           59512600.0000
+
+
+  Beginning Area-Recovery Phase  (max_area 0)
+  -----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:06:38 3150942.7      0.00       0.0      23.7                           59512600.0000
+    0:06:38 3150942.7      0.00       0.0      23.7                           59512600.0000
+    0:06:40 3150652.1      0.00       0.0      23.7                           59503960.0000
+    0:06:40 3150652.1      0.00       0.0      23.7                           59503960.0000
+    0:06:40 3150652.1      0.00       0.0      23.7                           59503960.0000
+    0:06:40 3150652.1      0.00       0.0      23.7                           59503960.0000
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+    0:06:46 3150795.6      0.00       0.0      98.5                           61381088.0000
+    0:06:46 3150820.4      0.00       0.0      95.0                           61409160.0000
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ss_1p08v_125c.db'
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_tt_1p2v_25c.db'
+Loading db file '/home/IC/PROJECTS/SPI/std_cells/scmetro_tsmc_cl013g_rvt_ff_1p32v_m40c.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'SPI_Wrapper' contains 2 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'RAM/clk': 2071 load(s), 1 driver(s)
+     Net 'RAM/test_se': 2071 load(s), 1 driver(s)
+1
+puts "=================================================="
+==================================================
+puts "==========   Post-DFT DRC + Coverage      ========="
+==========   Post-DFT DRC + Coverage      =========
+puts "=================================================="
+==================================================
+dft_drc -verbose -coverage_estimate >> $dft_drc_report
+# ================================================================
+# ===============  Section 11: Writing Outputs  ===================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========       Writing Netlist         ========="
+==========       Writing Netlist         =========
+puts "=================================================="
+==================================================
+#---------------------------------------------------------------
+# change_names:
+# Ensures all identifiers across all hierarchy levels are legal
+# in Verilog syntax. Removes illegal chars and keyword conflicts.
+#---------------------------------------------------------------
+change_names -hier -rule verilog
+1
+#---------------------------------------------------------------
+# Write gate-level Verilog netlist (scan-inserted).
+#---------------------------------------------------------------
+write_file -format verilog -hierarchy -output $dft_netlist
+Writing verilog file '/home/IC/PROJECTS/SPI/DFT/sys_dft_hier.v'.
+1
+#---------------------------------------------------------------
+# Write SDC (Synopsys Design Constraints) file.
+#---------------------------------------------------------------
+write_sdc "${top_module}_dft_constraints.sdc"
+1
+#---------------------------------------------------------------
+# Write SDF (Standard Delay Format) file.
+#---------------------------------------------------------------
+write_sdf "${top_module}_dft_timing.sdf"
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/IC/PROJECTS/SPI/DFT/SPI_Wrapper_dft_timing.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+Warning: Design 'SPI_Wrapper' contains 2 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+1
+puts "=================================================="
+==================================================
+puts "==========   Netlist & Constraints Done   ========"
+==========   Netlist & Constraints Done   ========
+puts "=================================================="
+==================================================
+# ================================================================
+# ===============  Section 12: Generating Reports  ================
+# ================================================================
+puts "=================================================="
+==================================================
+puts "==========       Generating Reports      ========="
+==========       Generating Reports      =========
+puts "=================================================="
+==================================================
+# ==================================================
+# report_area
+# --------------------------------------------------
+# Reports total and hierarchical cell area utilization
+# after scan insertion.
+# ==================================================
+report_area -hier > $area_report
+# ==================================================
+# report_power
+# --------------------------------------------------
+# Estimates total and hierarchical power consumption
+# after scan insertion.
+# ==================================================
+report_power -hier > $power_report
+# ==================================================
+# report_timing (Setup Check)
+# ==================================================
+report_timing -delay_type max -max_paths 100 > $timing_setup
+# ==================================================
+# report_timing (Hold Check)
+# ==================================================
+report_timing -delay_type min -max_paths 100 > $timing_hold
+# ==================================================
+# report_constraint
+# ==================================================
+report_constraint -all_violators > constraints.rpt
+puts "=================================================="
+==================================================
+puts "==========     DFT SYNTHESIS FINISHED!    ========="
+==========     DFT SYNTHESIS FINISHED!    =========
+puts "=================================================="
+==================================================
+# ================================================================
+# ===============  Section 13: Optional GUI  =======================
+# ================================================================
+if {$launch_gui} {
+    gui_start
+}
+dc_shell> 
