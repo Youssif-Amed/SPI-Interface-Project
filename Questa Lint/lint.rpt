@@ -1,0 +1,98 @@
+====================================================================================================
+Lint Check Report
+Questa Lint  Version 2021.1 4558100 win64 28-Jan-2021
+
+Timestamp            : Wed Jul 22 18:28:09 2026
+Description          : Report for referring checks count, check violations details, and  design information
+Design               : SPI_Wrapper
+Database             : D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/lint.db
+Design Quality Score : 99.9%
+
+Sections:
+   Section 1 : Check Summary
+   Section 2 : Check Details
+   Section 3 : Design Information
+====================================================================================================
+
+
+====================================================================================================
+Section 1 : Check Summary
+====================================================================================================
+-------------
+| Error (0) |
+-------------
+
+---------------
+| Warning (1) |
+---------------
+  always_has_inconsistent_async_control   : 1
+
+------------
+| Info (3) |
+------------
+  fsm_without_one_hot_encoding            : 1
+  parameter_name_duplicate                : 2
+
+----------------
+| Resolved (0) |
+----------------
+
+
+====================================================================================================
+Section 2 : Check Details
+====================================================================================================
+-------------
+| Error (0) |
+-------------
+
+
+---------------
+| Warning (1) |
+---------------
+
+Check: always_has_inconsistent_async_control [Category: Reset] (1)
+       [Message: Always block has assignment(s) with inconsistent asynchronous control signal. Always block: Module '<module>', File '<file>', Line '<line>', First inconsistent pair: Asynchronous flop '<flop1>', Line '<line1>', Synchronous flop '<flop2>', Line '<line2>'.]
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+always_has_inconsistent_async_control: [uninspected] Always block has assignment(s) with inconsistent asynchronous control signal. Always block: Module 'single_port_Ram', File 'D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/Single_Port_Ram.v', Line '27', First inconsistent pair: Asynchronous flop 'dout', Line '29', Synchronous flop 'addr_internal', Line '36'.
+
+
+
+------------
+| Info (3) |
+------------
+
+Check: fsm_without_one_hot_encoding [Category: Rtl Design Style] (1)
+       [Message: FSM encoding is not one-hot. Module '<module>', File '<file>', Line '<line>'.]
+------------------------------------------------------------------------------------------------
+fsm_without_one_hot_encoding: [uninspected] FSM encoding is not one-hot. Module 'SPI_Slave', File 'D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/SPI_Slave.v', Line '36'. [RTL ID:3a7a55f8_00200]
+
+
+Check: parameter_name_duplicate [Category: Nomenclature Style] (2)
+       [Message: Same parameter name is used in more than one module. Parameter '<parameter>', Total count '<count>', First module: Module '<module1>', File '<file1>', Line '<line1>', Second module: Module '<module2>', File '<file2>', Line '<line2>']
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'MEM_DEPTH', Total count '2', First module: Module 'SPI_Wrapper', File 'D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/SPI_Wrapper.v', Line '3', Second module: Module 'single_port_Ram', File 'D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/Single_Port_Ram.v', Line '3'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'ADD_SIZE', Total count '2', First module: Module 'SPI_Wrapper', File 'D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/SPI_Wrapper.v', Line '4', Second module: Module 'single_port_Ram', File 'D:/CUFE/Diplomas/PROJECTS/SPI/SPI_Slave_single_port_Ram/Questa_Lint/Single_Port_Ram.v', Line '4'
+
+
+
+----------------
+| Resolved (0) |
+----------------
+
+
+
+====================================================================================================
+Section 3 : Design Information
+====================================================================================================
+-----------
+| Summary |
+-----------
+  Register Bits                           : 36
+  Latch Bits                              : 0
+  User-specified Blackboxes               : 0
+  Inferred Blackboxes                     : 0
+  Empty Modules                           : 0
+  Unresolved Modules                      : 0
+  Hierarchical IPs                        : 0
+

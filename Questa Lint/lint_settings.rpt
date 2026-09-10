@@ -1,0 +1,748 @@
+====================================================================================================
+Lint Settings Report
+Questa Lint  Version 2021.1 4558100 win64 28-Jan-2021
+
+Timestamp            : Wed Jul 22 18:28:09 2026
+Description          : Report describing the configuration for the lint run
+
+Sections:
+   Section 1 : Methodology and Checks
+   Section 2 : Directives
+   Section 3 : Wild Card Expansion for Hier IP Directives
+====================================================================================================
+
+
+====================================================================================================
+Section 1 : Methodology and Checks
+====================================================================================================
+ Methodology     : soc
+ Goal(s)         : implementation
+ Checks enabled  : 349
+
+  1.1 Checks enabled in Methodology
+  ---------------------------------------------
+  always_exceeds_line_limit
+  always_has_inconsistent_async_control
+  always_has_multiple_async_control
+  always_has_multiple_events
+  always_has_nested_event_control
+  always_signal_assign_large
+  always_without_event
+  arith_expr_with_conditional_operator
+  array_index_with_expr
+  assign_chain
+  assign_int_to_reg
+  assign_or_comparison_has_x
+  assign_or_comparison_has_z
+  assign_others_to_slice
+  assign_real_to_bit
+  assign_real_to_int
+  assign_real_to_reg
+  assign_reg_to_int
+  assign_reg_to_real
+  assign_to_supply_net
+  assign_width_overflow
+  assign_width_underflow
+  assign_with_multi_arith_operations
+  assigns_mixed
+  assigns_mixed_in_always_block
+  async_block_top_stmt_not_if
+  async_control_is_gated
+  async_control_is_internal
+  async_reset_active_high
+  attribute_with_keyword_all
+  bit_order_reversed
+  blackbox_input_conn_inconsistent
+  blackbox_output_control_signal
+  blocking_assign_in_seq_block
+  bus_bit_as_clk
+  bus_bits_in_multi_seq_blocks
+  bus_bits_not_read
+  bus_bits_not_set
+  bus_conn_to_inst_reversed
+  bus_conn_to_prim_gate
+  case_condition_with_tristate
+  case_default_missing
+  case_default_not_last_item
+  case_default_redundant
+  case_eq_operator
+  case_item_duplicate
+  case_item_invalid
+  case_item_not_const
+  case_large
+  case_nested
+  case_others_null
+  case_pragma_redundant
+  case_select_const
+  case_select_has_expr
+  case_stmt_with_parallel_case
+  case_width_mismatch
+  case_with_memory_output
+  case_with_x_z
+  casex
+  casez
+  casez_has_x
+  clk_port_conn_complex
+  clock_gated
+  clock_in_wait_stmt
+  clock_internal
+  clock_path_buffer
+  clock_signal_as_non_clock
+  clock_with_both_edges
+  combo_loop
+  combo_loop_with_latch
+  combo_path_input_to_output
+  comment_has_control_char
+  comment_not_in_english
+  comparison_has_real_operand
+  comparison_width_mismatch
+  complex_expression
+  concat_expr_with_unsized_operand
+  concurrent_block_with_duplicate_assign
+  condition_const
+  condition_has_assign
+  condition_is_multi_bit
+  conditional_operator_nested
+  const_latch_data
+  const_output
+  const_reg_clock
+  const_reg_data
+  const_signal
+  const_with_inconsistent_value
+  conversion_to_stdlogicvector_invalid
+  data_event_has_edge
+  data_type_bit_select_invalid
+  data_type_not_recommended
+  data_type_std_ulogic
+  delay_in_non_flop_expr
+  design_ware_inst
+  div_mod_lhs_too_wide
+  div_mod_rem_operand_complex_expr
+  div_mod_rhs_invalid
+  div_mod_rhs_too_wide
+  div_mod_rhs_var
+  div_mod_rhs_zero
+  else_condition_dangling
+  empty_block
+  empty_module
+  empty_stmt
+  enum_decl_invalid
+  exponent_negative
+  expr_operands_width_mismatch
+  feedthrough_path
+  flop_async_reset_const
+  flop_clock_reset_loop
+  flop_output_as_clock
+  flop_output_in_initial
+  flop_redundant
+  flop_with_inverted_clock
+  flop_without_control
+  for_loop_var_init_not_const
+  for_loop_with_wait
+  for_stmt_with_complex_logic
+  fsm_state_count_large
+  fsm_without_one_hot_encoding
+  func_arg_array_constrained
+  func_as_reset_condition
+  func_bit_not_set
+  func_expr_input_size_mismatch
+  func_input_unused
+  func_input_width_mismatch
+  func_nonblocking_assign
+  func_return_before_last_stmt
+  func_return_range_fixed
+  func_return_range_mismatch
+  func_return_value_unspecified
+  func_sets_global_var
+  func_to_stdlogicvector
+  gen_inst_label_duplicate
+  gen_label_duplicate
+  gen_label_missing
+  gen_loop_index_not_int
+  generic_map_ordered
+  identifier_with_error_warning
+  if_condition_with_tristate
+  if_else_if_can_be_case
+  if_else_nested_large
+  if_stmt_shares_arithmetic_operator
+  if_stmt_with_arith_expr
+  if_with_memory_output
+  implicit_wire
+  incomplete_case_stmt_with_full_case
+  index_x_z
+  inferred_blackbox
+  inout_port_exists
+  inout_port_not_set
+  inout_port_unused
+  input_port_set
+  inst_param_width_overflow
+  inst_port_width_mismatch
+  int_without_range
+  latch_inferred
+  line_char_large
+  logical_not_on_multi_bit
+  logical_operator_on_multi_bit
+  long_combinational_path
+  loop_condition_const
+  loop_index_in_multi_always_blocks
+  loop_index_modified
+  loop_index_not_int
+  loop_step_incorrect
+  loop_var_not_in_condition
+  loop_var_not_in_init
+  loop_with_next_exit
+  loop_without_break
+  memory_not_set
+  memory_redefined
+  module_has_blackbox_instance
+  module_with_duplicate_ports
+  module_with_null_port
+  module_without_ports
+  multi_driven_signal
+  multi_ports_in_single_line
+  multi_wave_element
+  multiplication_operator
+  mux_select_const
+  nonblocking_assign_and_delay_in_always
+  nonblocking_assign_in_combo_block
+  operand_redundant
+  ordered_port_connection
+  parameter_count_large
+  parameter_name_duplicate
+  part_select_illegal
+  port_conn_is_expression
+  port_exp_with_integer
+  power_operand_invalid
+  pragma_coverage_off_nested
+  pragma_translate_off_nested
+  pragma_translate_on_nested
+  procedure_call
+  procedure_sets_global_var
+  process_exceeds_line_limit
+  process_has_async_set_reset
+  process_has_inconsistent_async_control
+  process_has_multiple_async_control
+  process_signal_assign_large
+  process_var_assign_disorder
+  process_without_event
+  qualified_expression
+  re_entrant_output
+  record_type
+  reduction_operator_on_single_bit
+  reference_event_without_edge
+  repeat_ctrl_not_const
+  reserved_keyword
+  reset_polarity_mismatch
+  reset_port_connection_static
+  reset_pragma_mismatch
+  reset_set_non_const_assign
+  reset_set_with_both_polarity
+  selected_signal_stmt
+  sensitivity_list_edge_multi_bit
+  sensitivity_list_operator_unexpected
+  sensitivity_list_signal_repeated
+  sensitivity_list_var_both_edges
+  sensitivity_list_var_missing
+  sensitivity_list_var_modified
+  seq_block_first_stmt_not_if
+  seq_block_has_complex_cond
+  seq_block_has_duplicate_assign
+  seq_block_has_multi_clks
+  shared_variable_in_multi_process
+  signal_assign_in_multi_initial
+  signal_sync_async
+  signal_with_negative_value
+  signed_unsigned_mixed_expr
+  sim_synth_mismatch_assign_event
+  sim_synth_mismatch_shared_var
+  sim_synth_mismatch_tristate_compare
+  stable_attribute
+  std_logic_vector_without_range
+  std_packages_mixed
+  string_has_control_char
+  subroutines_recursive_loop
+  sync_read_as_async
+  synopsys_attribute
+  synth_pragma_prefix_invalid
+  synth_pragma_prefix_missing
+  task_has_event
+  task_has_event_and_input
+  task_has_event_and_output
+  task_in_combo_block
+  task_in_seq_block
+  task_sets_global_var
+  tristate_enable_with_expr
+  tristate_inferred
+  tristate_multi_driven
+  tristate_not_at_top_level
+  tristate_other_desc_mixed
+  two_state_data_type
+  unconnected_inst
+  unconnected_inst_input
+  unconnected_inst_output
+  undriven_latch_data
+  undriven_latch_enable
+  undriven_reg_clock
+  undriven_reg_data
+  undriven_signal
+  unloaded_input_port
+  unresolved_module
+  unsynth_access_type
+  unsynth_alias_declaration
+  unsynth_allocator
+  unsynth_arithmetic_operator
+  unsynth_array_index_type_enum
+  unsynth_assert_stmt
+  unsynth_assign_deassign
+  unsynth_bidirectional_switch
+  unsynth_block_stmt_header
+  unsynth_charge_strength
+  unsynth_clk_in_concurrent_stmt
+  unsynth_clocking_style
+  unsynth_const_redefined
+  unsynth_dc_shell_script
+  unsynth_deferred_const
+  unsynth_defparam
+  unsynth_delay_in_bidirectional_switch
+  unsynth_delay_in_blocking_assign
+  unsynth_delay_in_cmos_switch
+  unsynth_delay_in_gate
+  unsynth_delay_in_mos_switch
+  unsynth_delay_in_net_decl
+  unsynth_delay_in_stmt
+  unsynth_delay_in_tristate_gate
+  unsynth_disable_stmt
+  unsynth_disconnection_spec
+  unsynth_drive_strength_assign
+  unsynth_drive_strength_gate
+  unsynth_else_after_clk_event
+  unsynth_enum_encoding_attribute
+  unsynth_event_var
+  unsynth_file_type
+  unsynth_force_release
+  unsynth_fork_join_block
+  unsynth_func_returns_real
+  unsynth_generic_not_int
+  unsynth_guarded_block_stmt
+  unsynth_hier_reference
+  unsynth_initial_stmt
+  unsynth_initial_value
+  unsynth_integer_array
+  unsynth_mos_switch
+  unsynth_multi_dim_array
+  unsynth_multi_wait_with_same_clk
+  unsynth_physical_type
+  unsynth_pli_task_func
+  unsynth_port_type
+  unsynth_port_type_unconstrained
+  unsynth_predefined_attribute
+  unsynth_pulldown
+  unsynth_pullup
+  unsynth_real_var
+  unsynth_repeat
+  unsynth_repeat_in_nonblocking_assign
+  unsynth_resolution_func
+  unsynth_sensitivity_list_conditions
+  unsynth_shift_operator
+  unsynth_signal_kind_register_bus
+  unsynth_specify_block
+  unsynth_stmt_in_entity
+  unsynth_time_var
+  unsynth_tri_net
+  unsynth_type_declaration_incomplete
+  unsynth_udp
+  unsynth_user_defined_attribute
+  unsynth_wait_stmt
+  unsynth_wand_wor_net
+  unsynth_while_in_subprogram
+  unsynth_while_loop
+  user_blackbox
+  var_assign_in_process
+  var_assign_without_deassign
+  var_deassign_without_assign
+  var_forced_without_release
+  var_index_range_insufficient
+  var_name_duplicate
+  var_read_before_set
+  var_released_without_force
+  when_else_nested
+  while_loop_iteration_limit
+
+
+  1.2 Checks enabled through directives
+  ---------------------------------------------
+  <none>
+
+  1.3 Checks disabled through directives
+  ---------------------------------------------
+  <none>
+
+  1.4 Setup Checks
+  ---------------------------------------------
+  library_excluded
+  package_excluded
+  violations_suppressed
+
+
+====================================================================================================
+Section 2 : Directives
+====================================================================================================
+
+  lint_preference directive
+  ---------------------------------------------
+  lint preference -allow_non_port_data_types reg wire tri integer logic interface -allow_port_data_types reg wire tri integer logic interface 
+
+
+  lint_report_check directive
+  ---------------------------------------------
+  lint report check -severity info always_exceeds_line_limit [soc/implementation.goal]
+  lint report check -severity warning always_has_inconsistent_async_control [soc/implementation.goal]
+  lint report check -severity info always_has_multiple_async_control [soc/implementation.goal]
+  lint report check -severity error always_has_multiple_events [soc/implementation.goal]
+  lint report check -severity warning always_has_nested_event_control [soc/implementation.goal]
+  lint report check -severity warning always_signal_assign_large [soc/implementation.goal]
+  lint report check -severity error always_without_event [soc/implementation.goal]
+  lint report check -severity error arith_expr_with_conditional_operator [soc/implementation.goal]
+  lint report check -severity error array_index_with_expr [soc/implementation.goal]
+  lint report check -severity warning assign_chain [soc/implementation.goal]
+  lint report check -severity error assign_int_to_reg [soc/implementation.goal]
+  lint report check -severity error assign_or_comparison_has_x [soc/implementation.goal]
+  lint report check -severity error assign_or_comparison_has_z [soc/implementation.goal]
+  lint report check -severity info assign_others_to_slice [soc/implementation.goal]
+  lint report check -severity error assign_real_to_bit [soc/implementation.goal]
+  lint report check -severity error assign_real_to_int [soc/implementation.goal]
+  lint report check -severity error assign_real_to_reg [soc/implementation.goal]
+  lint report check -severity error assign_reg_to_int [soc/implementation.goal]
+  lint report check -severity error assign_reg_to_real [soc/implementation.goal]
+  lint report check -severity info assign_to_supply_net [soc/implementation.goal]
+  lint report check -severity error assign_width_overflow [soc/implementation.goal]
+  lint report check -severity error assign_width_underflow [soc/implementation.goal]
+  lint report check -severity warning assign_with_multi_arith_operations [soc/implementation.goal]
+  lint report check -severity error assigns_mixed [soc/implementation.goal]
+  lint report check -severity error assigns_mixed_in_always_block [soc/implementation.goal]
+  lint report check -severity error async_block_top_stmt_not_if [soc/implementation.goal]
+  lint report check -severity warning async_control_is_gated [soc/implementation.goal]
+  lint report check -severity error async_control_is_internal [soc/implementation.goal]
+  lint report check -severity info async_reset_active_high [soc/implementation.goal]
+  lint report check -severity error attribute_with_keyword_all [soc/implementation.goal]
+  lint report check -severity warning bit_order_reversed [soc/implementation.goal]
+  lint report check -severity error blackbox_input_conn_inconsistent [soc/implementation.goal]
+  lint report check -severity error blackbox_output_control_signal [soc/implementation.goal]
+  lint report check -severity error blocking_assign_in_seq_block [soc/implementation.goal]
+  lint report check -severity error bus_bit_as_clk [soc/implementation.goal]
+  lint report check -severity error bus_bits_in_multi_seq_blocks [soc/implementation.goal]
+  lint report check -severity warning bus_bits_not_read [soc/implementation.goal]
+  lint report check -severity warning bus_bits_not_set [soc/implementation.goal]
+  lint report check -severity error bus_conn_to_inst_reversed [soc/implementation.goal]
+  lint report check -severity warning bus_conn_to_prim_gate [soc/implementation.goal]
+  lint report check -severity error case_condition_with_tristate [soc/implementation.goal]
+  lint report check -severity error case_default_missing [soc/implementation.goal]
+  lint report check -severity error case_default_not_last_item [soc/implementation.goal]
+  lint report check -severity info case_default_redundant [soc/implementation.goal]
+  lint report check -severity error case_eq_operator [soc/implementation.goal]
+  lint report check -severity error case_item_duplicate [soc/implementation.goal]
+  lint report check -severity error case_item_invalid [soc/implementation.goal]
+  lint report check -severity error case_item_not_const [soc/implementation.goal]
+  lint report check -severity info case_large [soc/implementation.goal]
+  lint report check -severity warning case_nested [soc/implementation.goal]
+  lint report check -severity info case_others_null [soc/implementation.goal]
+  lint report check -severity info case_pragma_redundant [soc/implementation.goal]
+  lint report check -severity error case_select_const [soc/implementation.goal]
+  lint report check -severity warning case_select_has_expr [soc/implementation.goal]
+  lint report check -severity error case_stmt_with_parallel_case [soc/implementation.goal]
+  lint report check -severity error case_width_mismatch [soc/implementation.goal]
+  lint report check -severity error case_with_memory_output [soc/implementation.goal]
+  lint report check -severity error case_with_x_z [soc/implementation.goal]
+  lint report check -severity error casex [soc/implementation.goal]
+  lint report check -severity info casez [soc/implementation.goal]
+  lint report check -severity error casez_has_x [soc/implementation.goal]
+  lint report check -severity error clk_port_conn_complex [soc/implementation.goal]
+  lint report check -severity warning clock_gated [soc/implementation.goal]
+  lint report check -severity error clock_in_wait_stmt [soc/implementation.goal]
+  lint report check -severity warning clock_internal [soc/implementation.goal]
+  lint report check -severity info clock_path_buffer [soc/implementation.goal]
+  lint report check -severity error clock_signal_as_non_clock [soc/implementation.goal]
+  lint report check -severity info clock_with_both_edges [soc/implementation.goal]
+  lint report check -severity error combo_loop [soc/implementation.goal]
+  lint report check -severity error combo_loop_with_latch [soc/implementation.goal]
+  lint report check -severity info combo_path_input_to_output [soc/implementation.goal]
+  lint report check -severity info comment_has_control_char [soc/implementation.goal]
+  lint report check -severity info comment_not_in_english [soc/implementation.goal]
+  lint report check -severity info comparison_has_real_operand [soc/implementation.goal]
+  lint report check -severity error comparison_width_mismatch [soc/implementation.goal]
+  lint report check -severity info complex_expression [soc/implementation.goal]
+  lint report check -severity info concat_expr_with_unsized_operand [soc/implementation.goal]
+  lint report check -severity warning concurrent_block_with_duplicate_assign [soc/implementation.goal]
+  lint report check -severity warning condition_const [soc/implementation.goal]
+  lint report check -severity error condition_has_assign [soc/implementation.goal]
+  lint report check -severity error condition_is_multi_bit [soc/implementation.goal]
+  lint report check -severity info conditional_operator_nested [soc/implementation.goal]
+  lint report check -severity info const_latch_data [soc/implementation.goal]
+  lint report check -severity info const_output [soc/implementation.goal]
+  lint report check -severity info const_reg_clock [soc/implementation.goal]
+  lint report check -severity info const_reg_data [soc/implementation.goal]
+  lint report check -severity info const_signal [soc/implementation.goal]
+  lint report check -severity error const_with_inconsistent_value [soc/implementation.goal]
+  lint report check -severity error conversion_to_stdlogicvector_invalid [soc/implementation.goal]
+  lint report check -severity warning data_event_has_edge [soc/implementation.goal]
+  lint report check -severity warning data_type_bit_select_invalid [soc/implementation.goal]
+  lint report check -severity warning data_type_not_recommended [soc/implementation.goal]
+  lint report check -severity info data_type_std_ulogic [soc/implementation.goal]
+  lint report check -severity info delay_in_non_flop_expr [soc/implementation.goal]
+  lint report check -severity info design_ware_inst [soc/implementation.goal]
+  lint report check -severity warning div_mod_lhs_too_wide [soc/implementation.goal]
+  lint report check -severity warning div_mod_rem_operand_complex_expr [soc/implementation.goal]
+  lint report check -severity error div_mod_rhs_invalid [soc/implementation.goal]
+  lint report check -severity warning div_mod_rhs_too_wide [soc/implementation.goal]
+  lint report check -severity error div_mod_rhs_var [soc/implementation.goal]
+  lint report check -severity error div_mod_rhs_zero [soc/implementation.goal]
+  lint report check -severity error else_condition_dangling [soc/implementation.goal]
+  lint report check -severity error empty_block [soc/implementation.goal]
+  lint report check -severity error empty_module [soc/implementation.goal]
+  lint report check -severity info empty_stmt [soc/implementation.goal]
+  lint report check -severity warning enum_decl_invalid [soc/implementation.goal]
+  lint report check -severity error exponent_negative [soc/implementation.goal]
+  lint report check -severity error expr_operands_width_mismatch [soc/implementation.goal]
+  lint report check -severity info feedthrough_path [soc/implementation.goal]
+  lint report check -severity info flop_async_reset_const [soc/implementation.goal]
+  lint report check -severity error flop_clock_reset_loop [soc/implementation.goal]
+  lint report check -severity warning flop_output_as_clock [soc/implementation.goal]
+  lint report check -severity warning flop_output_in_initial [soc/implementation.goal]
+  lint report check -severity info flop_redundant [soc/implementation.goal]
+  lint report check -severity info flop_with_inverted_clock [soc/implementation.goal]
+  lint report check -severity info flop_without_control [soc/implementation.goal]
+  lint report check -severity error for_loop_var_init_not_const [soc/implementation.goal]
+  lint report check -severity error for_loop_with_wait [soc/implementation.goal]
+  lint report check -severity warning for_stmt_with_complex_logic [soc/implementation.goal]
+  lint report check -severity info fsm_state_count_large [soc/implementation.goal]
+  lint report check -severity info fsm_without_one_hot_encoding [soc/implementation.goal]
+  lint report check -severity warning func_arg_array_constrained [soc/implementation.goal]
+  lint report check -severity error func_as_reset_condition [soc/implementation.goal]
+  lint report check -severity error func_bit_not_set [soc/implementation.goal]
+  lint report check -severity error func_expr_input_size_mismatch [soc/implementation.goal]
+  lint report check -severity info func_input_unused [soc/implementation.goal]
+  lint report check -severity error func_input_width_mismatch [soc/implementation.goal]
+  lint report check -severity error func_nonblocking_assign [soc/implementation.goal]
+  lint report check -severity warning func_return_before_last_stmt [soc/implementation.goal]
+  lint report check -severity error func_return_range_fixed [soc/implementation.goal]
+  lint report check -severity error func_return_range_mismatch [soc/implementation.goal]
+  lint report check -severity error func_return_value_unspecified [soc/implementation.goal]
+  lint report check -severity error func_sets_global_var [soc/implementation.goal]
+  lint report check -severity warning func_to_stdlogicvector [soc/implementation.goal]
+  lint report check -severity error gen_inst_label_duplicate [soc/implementation.goal]
+  lint report check -severity error gen_label_duplicate [soc/implementation.goal]
+  lint report check -severity info gen_label_missing [soc/implementation.goal]
+  lint report check -severity error gen_loop_index_not_int [soc/implementation.goal]
+  lint report check -severity warning generic_map_ordered [soc/implementation.goal]
+  lint report check -severity info identifier_with_error_warning [soc/implementation.goal]
+  lint report check -severity error if_condition_with_tristate [soc/implementation.goal]
+  lint report check -severity info if_else_if_can_be_case [soc/implementation.goal]
+  lint report check -severity warning if_else_nested_large [soc/implementation.goal]
+  lint report check -severity error if_stmt_shares_arithmetic_operator [soc/implementation.goal]
+  lint report check -severity warning if_stmt_with_arith_expr [soc/implementation.goal]
+  lint report check -severity warning if_with_memory_output [soc/implementation.goal]
+  lint report check -severity info implicit_wire [soc/implementation.goal]
+  lint report check -severity error incomplete_case_stmt_with_full_case [soc/implementation.goal]
+  lint report check -severity error index_x_z [soc/implementation.goal]
+  lint report check -severity error inferred_blackbox [soc/implementation.goal]
+  lint report check -severity info inout_port_exists [soc/implementation.goal]
+  lint report check -severity warning inout_port_not_set [soc/implementation.goal]
+  lint report check -severity info inout_port_unused [soc/implementation.goal]
+  lint report check -severity error input_port_set [soc/implementation.goal]
+  lint report check -severity error inst_param_width_overflow [soc/implementation.goal]
+  lint report check -severity error inst_port_width_mismatch [soc/implementation.goal]
+  lint report check -severity info int_without_range [soc/implementation.goal]
+  lint report check -severity warning latch_inferred [soc/implementation.goal]
+  lint report check -severity info line_char_large [soc/implementation.goal]
+  lint report check -severity warning logical_not_on_multi_bit [soc/implementation.goal]
+  lint report check -severity warning logical_operator_on_multi_bit [soc/implementation.goal]
+  lint report check -severity error long_combinational_path [soc/implementation.goal]
+  lint report check -severity error loop_condition_const [soc/implementation.goal]
+  lint report check -severity error loop_index_in_multi_always_blocks [soc/implementation.goal]
+  lint report check -severity error loop_index_modified [soc/implementation.goal]
+  lint report check -severity error loop_index_not_int [soc/implementation.goal]
+  lint report check -severity error loop_step_incorrect [soc/implementation.goal]
+  lint report check -severity error loop_var_not_in_condition [soc/implementation.goal]
+  lint report check -severity error loop_var_not_in_init [soc/implementation.goal]
+  lint report check -severity error loop_with_next_exit [soc/implementation.goal]
+  lint report check -severity error loop_without_break [soc/implementation.goal]
+  lint report check -severity warning memory_not_set [soc/implementation.goal]
+  lint report check -severity warning memory_redefined [soc/implementation.goal]
+  lint report check -severity warning module_has_blackbox_instance [soc/implementation.goal]
+  lint report check -severity error module_with_duplicate_ports [soc/implementation.goal]
+  lint report check -severity error module_with_null_port [soc/implementation.goal]
+  lint report check -severity warning module_without_ports [soc/implementation.goal]
+  lint report check -severity error multi_driven_signal [soc/implementation.goal]
+  lint report check -severity info multi_ports_in_single_line [soc/implementation.goal]
+  lint report check -severity warning multi_wave_element [soc/implementation.goal]
+  lint report check -severity info multiplication_operator [soc/implementation.goal]
+  lint report check -severity warning mux_select_const [soc/implementation.goal]
+  lint report check -severity warning nonblocking_assign_and_delay_in_always [soc/implementation.goal]
+  lint report check -severity error nonblocking_assign_in_combo_block [soc/implementation.goal]
+  lint report check -severity error operand_redundant [soc/implementation.goal]
+  lint report check -severity warning ordered_port_connection [soc/implementation.goal]
+  lint report check -severity info parameter_count_large [soc/implementation.goal]
+  lint report check -severity info parameter_name_duplicate [soc/implementation.goal]
+  lint report check -severity error part_select_illegal [soc/implementation.goal]
+  lint report check -severity error port_conn_is_expression [soc/implementation.goal]
+  lint report check -severity error port_exp_with_integer [soc/implementation.goal]
+  lint report check -severity error power_operand_invalid [soc/implementation.goal]
+  lint report check -severity warning pragma_coverage_off_nested [soc/implementation.goal]
+  lint report check -severity warning pragma_translate_off_nested [soc/implementation.goal]
+  lint report check -severity error pragma_translate_on_nested [soc/implementation.goal]
+  lint report check -severity warning procedure_call [soc/implementation.goal]
+  lint report check -severity error procedure_sets_global_var [soc/implementation.goal]
+  lint report check -severity warning process_exceeds_line_limit [soc/implementation.goal]
+  lint report check -severity info process_has_async_set_reset [soc/implementation.goal]
+  lint report check -severity warning process_has_inconsistent_async_control [soc/implementation.goal]
+  lint report check -severity info process_has_multiple_async_control [soc/implementation.goal]
+  lint report check -severity warning process_signal_assign_large [soc/implementation.goal]
+  lint report check -severity warning process_var_assign_disorder [soc/implementation.goal]
+  lint report check -severity error process_without_event [soc/implementation.goal]
+  lint report check -severity info qualified_expression [soc/implementation.goal]
+  lint report check -severity info re_entrant_output [soc/implementation.goal]
+  lint report check -severity warning record_type [soc/implementation.goal]
+  lint report check -severity info reduction_operator_on_single_bit [soc/implementation.goal]
+  lint report check -severity warning reference_event_without_edge [soc/implementation.goal]
+  lint report check -severity error repeat_ctrl_not_const [soc/implementation.goal]
+  lint report check -severity info reserved_keyword [soc/implementation.goal]
+  lint report check -severity error reset_polarity_mismatch [soc/implementation.goal]
+  lint report check -severity info reset_port_connection_static [soc/implementation.goal]
+  lint report check -severity error reset_pragma_mismatch [soc/implementation.goal]
+  lint report check -severity error reset_set_non_const_assign [soc/implementation.goal]
+  lint report check -severity error reset_set_with_both_polarity [soc/implementation.goal]
+  lint report check -severity warning selected_signal_stmt [soc/implementation.goal]
+  lint report check -severity error sensitivity_list_edge_multi_bit [soc/implementation.goal]
+  lint report check -severity error sensitivity_list_operator_unexpected [soc/implementation.goal]
+  lint report check -severity warning sensitivity_list_signal_repeated [soc/implementation.goal]
+  lint report check -severity warning sensitivity_list_var_both_edges [soc/implementation.goal]
+  lint report check -severity error sensitivity_list_var_missing [soc/implementation.goal]
+  lint report check -severity error sensitivity_list_var_modified [soc/implementation.goal]
+  lint report check -severity error seq_block_first_stmt_not_if [soc/implementation.goal]
+  lint report check -severity warning seq_block_has_complex_cond [soc/implementation.goal]
+  lint report check -severity warning seq_block_has_duplicate_assign [soc/implementation.goal]
+  lint report check -severity error seq_block_has_multi_clks [soc/implementation.goal]
+  lint report check -severity error shared_variable_in_multi_process [soc/implementation.goal]
+  lint report check -severity warning signal_assign_in_multi_initial [soc/implementation.goal]
+  lint report check -severity error signal_sync_async [soc/implementation.goal]
+  lint report check -severity error signal_with_negative_value [soc/implementation.goal]
+  lint report check -severity error signed_unsigned_mixed_expr [soc/implementation.goal]
+  lint report check -severity error sim_synth_mismatch_assign_event [soc/implementation.goal]
+  lint report check -severity error sim_synth_mismatch_shared_var [soc/implementation.goal]
+  lint report check -severity error sim_synth_mismatch_tristate_compare [soc/implementation.goal]
+  lint report check -severity error stable_attribute [soc/implementation.goal]
+  lint report check -severity error std_logic_vector_without_range [soc/implementation.goal]
+  lint report check -severity info std_packages_mixed [soc/implementation.goal]
+  lint report check -severity warning string_has_control_char [soc/implementation.goal]
+  lint report check -severity error subroutines_recursive_loop [soc/implementation.goal]
+  lint report check -severity warning sync_read_as_async [soc/implementation.goal]
+  lint report check -severity info synopsys_attribute [soc/implementation.goal]
+  lint report check -severity error synth_pragma_prefix_invalid [soc/implementation.goal]
+  lint report check -severity error synth_pragma_prefix_missing [soc/implementation.goal]
+  lint report check -severity error task_has_event [soc/implementation.goal]
+  lint report check -severity info task_has_event_and_input [soc/implementation.goal]
+  lint report check -severity info task_has_event_and_output [soc/implementation.goal]
+  lint report check -severity error task_in_combo_block [soc/implementation.goal]
+  lint report check -severity error task_in_seq_block [soc/implementation.goal]
+  lint report check -severity error task_sets_global_var [soc/implementation.goal]
+  lint report check -severity warning tristate_enable_with_expr [soc/implementation.goal]
+  lint report check -severity warning tristate_inferred [soc/implementation.goal]
+  lint report check -severity info tristate_multi_driven [soc/implementation.goal]
+  lint report check -severity warning tristate_not_at_top_level [soc/implementation.goal]
+  lint report check -severity info tristate_other_desc_mixed [soc/implementation.goal]
+  lint report check -severity info two_state_data_type [soc/implementation.goal]
+  lint report check -severity info unconnected_inst [soc/implementation.goal]
+  lint report check -severity error unconnected_inst_input [soc/implementation.goal]
+  lint report check -severity warning unconnected_inst_output [soc/implementation.goal]
+  lint report check -severity warning undriven_latch_data [soc/implementation.goal]
+  lint report check -severity warning undriven_latch_enable [soc/implementation.goal]
+  lint report check -severity warning undriven_reg_clock [soc/implementation.goal]
+  lint report check -severity warning undriven_reg_data [soc/implementation.goal]
+  lint report check -severity error undriven_signal [soc/implementation.goal]
+  lint report check -severity info unloaded_input_port [soc/implementation.goal]
+  lint report check -severity error unresolved_module [soc/implementation.goal]
+  lint report check -severity error unsynth_access_type [soc/implementation.goal]
+  lint report check -severity error unsynth_alias_declaration [soc/implementation.goal]
+  lint report check -severity error unsynth_allocator [soc/implementation.goal]
+  lint report check -severity error unsynth_arithmetic_operator [soc/implementation.goal]
+  lint report check -severity error unsynth_array_index_type_enum [soc/implementation.goal]
+  lint report check -severity info unsynth_assert_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_assign_deassign [soc/implementation.goal]
+  lint report check -severity error unsynth_bidirectional_switch [soc/implementation.goal]
+  lint report check -severity error unsynth_block_stmt_header [soc/implementation.goal]
+  lint report check -severity error unsynth_charge_strength [soc/implementation.goal]
+  lint report check -severity error unsynth_clk_in_concurrent_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_clocking_style [soc/implementation.goal]
+  lint report check -severity error unsynth_const_redefined [soc/implementation.goal]
+  lint report check -severity error unsynth_dc_shell_script [soc/implementation.goal]
+  lint report check -severity error unsynth_deferred_const [soc/implementation.goal]
+  lint report check -severity error unsynth_defparam [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_bidirectional_switch [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_blocking_assign [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_cmos_switch [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_gate [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_mos_switch [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_net_decl [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_delay_in_tristate_gate [soc/implementation.goal]
+  lint report check -severity error unsynth_disable_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_disconnection_spec [soc/implementation.goal]
+  lint report check -severity error unsynth_drive_strength_assign [soc/implementation.goal]
+  lint report check -severity error unsynth_drive_strength_gate [soc/implementation.goal]
+  lint report check -severity error unsynth_else_after_clk_event [soc/implementation.goal]
+  lint report check -severity error unsynth_enum_encoding_attribute [soc/implementation.goal]
+  lint report check -severity error unsynth_event_var [soc/implementation.goal]
+  lint report check -severity error unsynth_file_type [soc/implementation.goal]
+  lint report check -severity error unsynth_force_release [soc/implementation.goal]
+  lint report check -severity error unsynth_fork_join_block [soc/implementation.goal]
+  lint report check -severity error unsynth_func_returns_real [soc/implementation.goal]
+  lint report check -severity warning unsynth_generic_not_int [soc/implementation.goal]
+  lint report check -severity error unsynth_guarded_block_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_hier_reference [soc/implementation.goal]
+  lint report check -severity error unsynth_initial_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_initial_value [soc/implementation.goal]
+  lint report check -severity error unsynth_integer_array [soc/implementation.goal]
+  lint report check -severity error unsynth_mos_switch [soc/implementation.goal]
+  lint report check -severity error unsynth_multi_dim_array [soc/implementation.goal]
+  lint report check -severity error unsynth_multi_wait_with_same_clk [soc/implementation.goal]
+  lint report check -severity error unsynth_physical_type [soc/implementation.goal]
+  lint report check -severity error unsynth_pli_task_func [soc/implementation.goal]
+  lint report check -severity error unsynth_port_type [soc/implementation.goal]
+  lint report check -severity error unsynth_port_type_unconstrained [soc/implementation.goal]
+  lint report check -severity error unsynth_predefined_attribute [soc/implementation.goal]
+  lint report check -severity error unsynth_pulldown [soc/implementation.goal]
+  lint report check -severity error unsynth_pullup [soc/implementation.goal]
+  lint report check -severity error unsynth_real_var [soc/implementation.goal]
+  lint report check -severity error unsynth_repeat [soc/implementation.goal]
+  lint report check -severity error unsynth_repeat_in_nonblocking_assign [soc/implementation.goal]
+  lint report check -severity error unsynth_resolution_func [soc/implementation.goal]
+  lint report check -severity error unsynth_sensitivity_list_conditions [soc/implementation.goal]
+  lint report check -severity error unsynth_shift_operator [soc/implementation.goal]
+  lint report check -severity error unsynth_signal_kind_register_bus [soc/implementation.goal]
+  lint report check -severity error unsynth_specify_block [soc/implementation.goal]
+  lint report check -severity error unsynth_stmt_in_entity [soc/implementation.goal]
+  lint report check -severity error unsynth_time_var [soc/implementation.goal]
+  lint report check -severity error unsynth_tri_net [soc/implementation.goal]
+  lint report check -severity error unsynth_type_declaration_incomplete [soc/implementation.goal]
+  lint report check -severity error unsynth_udp [soc/implementation.goal]
+  lint report check -severity error unsynth_user_defined_attribute [soc/implementation.goal]
+  lint report check -severity error unsynth_wait_stmt [soc/implementation.goal]
+  lint report check -severity error unsynth_wand_wor_net [soc/implementation.goal]
+  lint report check -severity error unsynth_while_in_subprogram [soc/implementation.goal]
+  lint report check -severity error unsynth_while_loop [soc/implementation.goal]
+  lint report check -severity info user_blackbox [soc/implementation.goal]
+  lint report check -severity warning var_assign_in_process [soc/implementation.goal]
+  lint report check -severity warning var_assign_without_deassign [soc/implementation.goal]
+  lint report check -severity warning var_deassign_without_assign [soc/implementation.goal]
+  lint report check -severity error var_forced_without_release [soc/implementation.goal]
+  lint report check -severity error var_index_range_insufficient [soc/implementation.goal]
+  lint report check -severity error var_name_duplicate [soc/implementation.goal]
+  lint report check -severity error var_read_before_set [soc/implementation.goal]
+  lint report check -severity error var_released_without_force [soc/implementation.goal]
+  lint report check -severity warning when_else_nested [soc/implementation.goal]
+  lint report check -severity warning while_loop_iteration_limit [soc/implementation.goal]
+
+
+====================================================================================================
+Section 3 : Wild Card Expansion for Hier IP Directives
+====================================================================================================
