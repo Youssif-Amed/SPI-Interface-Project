@@ -10,7 +10,7 @@ module single_port_Ram #(
                        * din[9:8] = 10 => Read, Hold din[7:0] internally as Read address
                        * din[9:8] = 01 => Read the memory with rd address held previously,tx_valid = HIGH,
                        *                  dout holds the word read from the memory, ignore din[7:0]     */
-  input  clk,         /*  clock signal input */
+  input  clk,         /* clock signal input */
   input  arst_n,      /*  active low asynchronous reset */
   input  rx_valid,    /*  if HIGH: accept din[7:0] to save the wr/rd address internally or write a memory word */
   /*--------------outputs-------------*/
@@ -24,11 +24,12 @@ module single_port_Ram #(
   (* ram_style = "block" *)reg [7:0]mem[MEM_DEPTH-1:0];
 
 
-  always @(posedge clk) begin
+  always @(posedge clk or negedge arst_n) begin
     if(~arst_n)begin
-      dout <= 0;
+      dout     <= 0;
       tx_valid <= 0;
     end else if(rx_valid) begin
+    
       case (din[9:8])
           2'b00 :
             /* Write operation - hold the write address */ 
@@ -41,12 +42,12 @@ module single_port_Ram #(
             addr_internal <= din[7:0];
           2'b11 : begin
             /* Read operation - read data from memory mem[addr_internal]  */ 
-            dout <= mem[addr_internal];
+            dout     <= mem[addr_internal];
             tx_valid <= 1;
           end
           default: begin
             /* deafult case  */ 
-            dout <= 0;
+            dout     <= 0;
             tx_valid <= 0;
           end
       endcase
