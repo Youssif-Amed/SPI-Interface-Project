@@ -37,7 +37,7 @@ The SPI Interface project is designed to facilitate communication between a mast
 - [**Implementation/**](FPGA_Flow/Implementation): Directory containing FPGA implementation reports for different FSM encoding methods.
 - [**Lint/**](Lint): Questa Lint run files, screenshots, and the final lint report.
 - [**ASIC_Flow/Synthesis/**](ASIC_Flow/Synthesis): Pre-DFT Design Compiler synthesis reports (area, power, setup, hold).
-- [**ASIC_Flow/DFT/**](ASIC_Flow/DFT): Post-DFT (scan-inserted) reports (area, power, setup, hold, DRC).
+- [**ASIC_Flow/DFT/**](Synthesis/DFT): Post-DFT (scan-inserted) reports (area, power, setup, hold, DRC).
 
 ## FSM Encodings
 
