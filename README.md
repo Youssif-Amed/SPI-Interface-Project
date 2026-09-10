@@ -35,9 +35,9 @@ The SPI Interface project is designed to facilitate communication between a mast
 - [**constraints.xdc**](FPGA_Flow/SPI_Constraints.xdc): Constraints file used in Vivado for FPGA implementation.
 - [**synthesis/**](FPGA_Flow/Synthesis): Directory containing FPGA synthesis reports for different FSM encoding methods.
 - [**Implementation/**](FPGA_Flow/Implementation): Directory containing FPGA implementation reports for different FSM encoding methods.
-- [**Lint/**](Quest_Lint): Questa Lint run files, screenshots, and the final lint report.
-- [**ASIC_Flow/Synthesis/**](Synthesis): Pre-DFT Design Compiler synthesis reports (area, power, setup, hold).
-- [**ASIC_Flow/DFT/**](Synthesis/DFT): Post-DFT (scan-inserted) reports (area, power, setup, hold, DRC).
+- [**Lint**](Quest_Lint): Questa Lint run files, screenshots, and the final lint report.
+- [**Synthesis**](Synthesis): Pre-DFT Design Compiler synthesis reports (area, power, setup, hold).
+- [**DFT**](Synthesis/DFT): Post-DFT (scan-inserted) reports (area, power, setup, hold, DRC).
 
 ## FSM Encodings
 
@@ -66,7 +66,7 @@ An initial run flagged an `always_has_inconsistent_async_control` warning on the
 
 **Final Design Quality Score: 99.9%** — 36 register bits, 0 latch bits, 0 blackboxes, 0 unresolved modules.
 
-Full report: [Lint/lint.rpt](Questa_Lint/lint.rpt)
+Full report: [Questa Lint](Questa_Lint)
 
 ## ASIC Synthesis and DFT Insertion (Synopsys Design Compiler)
 
@@ -87,7 +87,7 @@ In addition to the FPGA flow, the SPI_Wrapper top module was synthesized on a TS
 Worst setup path: `MOSI → RAM/mem_reg_227__2_` (arrival 31.59 ns, required 99.40 ns).
 Worst hold path: `RAM/tx_valid_reg → RAM/tx_valid_reg` (arrival 0.85 ns, required −0.11 ns).
 
-Reports: [ASIC_Flow/Synthesis/area_report.rpt](Synthesis/Syn/area_report.rpt) · [power_report.rpt](Synthesis/Syn/power_report.rpt) · [timing_setup.rpt](Synthesis/Syn/timing_setup.rpt) · [timing_hold.rpt](Synthesis/Syn/timing_hold.rpt)
+Reports: [area_report.rpt](Synthesis/Syn/area_report.rpt) · [power_report.rpt](Synthesis/Syn/power_report.rpt) · [timing_setup.rpt](Synthesis/Syn/timing_setup.rpt) · [timing_hold.rpt](Synthesis/Syn/timing_hold.rpt)
 
 ### DFT / Scan Insertion
 
@@ -105,7 +105,7 @@ Dedicated DFT ports (`test_mode`, `SI`, `SE`, `scan_clk`, `scan_rst`, `SO`) were
 Worst setup path: `MOSI → RAM/mem_reg_0__2_` (arrival 31.48 ns, required 99.39 ns).
 Worst hold path: `RAM/dout_reg_7_ → RAM/mem_reg_0__0_` (arrival 0.62 ns, required −0.15 ns), through the new scan-select mux.
 
-Reports: [ASIC_Flow/DFT/area_report.rpt](Synthesis/DFT/area_report.rpt) · [power_report.rpt](Synthesis/DFT/power_report.rpt) · [timing_setup.rpt](Synthesis/DFT/timing_setup.rpt) · [timing_hold.rpt](Synthesis/DFT/timing_hold.rpt) · [dft_drc.rpt](Synthesis/DFT/dft_drc.rpt)
+Reports: [area_report.rpt](Synthesis/DFT/area_report.rpt) · [power_report.rpt](Synthesis/DFT/power_report.rpt) · [timing_setup.rpt](Synthesis/DFT/timing_setup.rpt) · [timing_hold.rpt](Synthesis/DFT/timing_hold.rpt) · [dft_drc.rpt](Synthesis/DFT/dft_drc.rpt)
 
 > **Note on power:** the post-DFT total power (6.820 mW) reflects Design Compiler's default toggle-rate estimate on the newly added, unannotated scan ports — not a real functional increase. The RAM and SPI_Slave sub-block power barely changed from the pre-DFT numbers.
 
